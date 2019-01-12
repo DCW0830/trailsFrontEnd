@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import NavBar from '../components/NavBar'
 import {connect} from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
-import { getUser } from '../actions/users'
+import { logIn } from '../actions/users'
 
 class Login extends Component {
   state = {
@@ -32,8 +32,8 @@ class Login extends Component {
     .then(response => {
       console.log(response)
       if (response.errors) {
-        window.alert(response.errors, 'Try Again!')
-      }else if(response.id){
+        window.alert(`${response.errors}: Try Again!`)
+      }else if(response.current.id){
         this.setState({
           username: '',
           pw: ''
@@ -70,10 +70,10 @@ class Login extends Component {
         <span>
           Click to Create Account!
         </span>
-        <Link to='/Signup'> Sign Up</Link>
+        <Link to='/SignUp'> Sign Up</Link>
       </div>
     );
   }
 }
 
-export default withRouter (connect(null, {getUser})(Login))
+export default withRouter (connect(null, {logIn})(Login))

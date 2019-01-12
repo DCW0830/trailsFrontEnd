@@ -38,7 +38,7 @@ const NavBar = () => {
         activeStyle={{
           background: 'darkblue'
         }}
-      >Login</NavLink>
+      >LogIn</NavLink>
 
       <NavLink
         to='/SignUp'

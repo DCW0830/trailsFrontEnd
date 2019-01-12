@@ -35,7 +35,7 @@ class SignUp extends Component {
     .then(response => {
       console.log(response)
       if (response.errors) {
-        window.alert(response.errors, 'Try Again!')
+        window.alert(`${response.errors}: Try Again!`)
       }else if(response.id){
         this.setState({
           username: '',
@@ -81,7 +81,7 @@ class SignUp extends Component {
         <span>
           Click to Sign In As Existing User!
         </span>
-        <Link to="/"> Login</Link>
+        <Link to="/"> Log In</Link>
       </div>
     );
   }
