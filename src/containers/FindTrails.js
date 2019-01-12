@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import FindTrailsForm from '../components/FindTrailsForm'
+import FindTrailsForm from './FindTrailsForm'
 import NavBar from '../components/NavBar'
 
 const link = {

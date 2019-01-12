@@ -1,9 +1,8 @@
 import React from 'react'
-import Home from '../components/Home'
-import { BrowserRouter as Router, Route} from 'react-router-dom'
-import Login from '../components/Login'
-import MyTrails from './MyTrails'
+import Home from './Home'
+import Login from './Login'
 import FindTrails from './FindTrails'
+import { BrowserRouter as Router, Route} from 'react-router-dom'
 
 const App = () => {
   return (
@@ -11,7 +10,6 @@ const App = () => {
       <React.Fragment>
         <Route exact path="/Home" component={Home} />
         <Route exact path="/" component={Login} />
-        <Route exact path="/MyTrails" component={MyTrails} />
         <Route exact path="/FindTrails" component={FindTrails} />
       </React.Fragment>
     </Router>
