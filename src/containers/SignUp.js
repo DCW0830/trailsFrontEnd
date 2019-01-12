@@ -2,12 +2,13 @@ import React, {Component} from 'react';
 import NavBar from '../components/NavBar'
 import {connect} from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
-import { getUser } from '../actions/users'
+import { createUser } from '../actions/users'
 
-class Login extends Component {
+class SignUp extends Component {
   state = {
     username: '',
-    pw: ''
+    pw: '',
+    pwConfirmation: ''
   }
 
   handleChange = (event) => {
@@ -18,12 +19,14 @@ class Login extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault()
-    fetch('http://localhost:3000/api/v1/login', {
+
+    fetch('http://localhost:3000/api/v1/signup', {
       method: 'POST',
       body: JSON.stringify(
         {user: {
         username: this.state.username,
-        password: this.state.pw
+        password: this.state.pw,
+        password_confirmation: this.state.pwConfirmation
       } }),
       headers:{
         'Content-Type': 'application/json'
@@ -36,7 +39,8 @@ class Login extends Component {
       }else if(response.id){
         this.setState({
           username: '',
-          pw: ''
+          pw: '',
+          pwConfirmation: ''
         })
       }
     })
@@ -46,7 +50,7 @@ class Login extends Component {
     return (
       <div>
         <NavBar />
-        <h2>Sign In!</h2>
+        <h2>Create Account!</h2>
           <form onSubmit={this.handleSubmit}>
             <label>Username:</label>
             <input
@@ -64,16 +68,23 @@ class Login extends Component {
              type="text"
             />
             <br/>
-            <button>Sign In!</button>
+            <label>Password Confirmation:</label>
+            <input
+              value={this.state.pwConfirmation}
+              name='pwConfirmation'
+              onChange={this.handleChange} type="text"
+            />
+            <br/>
+            <button>Create Account!</button>
           </form>
         <br/>
         <span>
-          Click to Create Account!
+          Click to Sign In As Existing User!
         </span>
-        <Link to='/Signup'> Sign Up</Link>
+        <Link to="/"> Login</Link>
       </div>
     );
   }
 }
 
-export default withRouter (connect(null, {getUser})(Login))
+export default withRouter (connect(null, {createUser})(SignUp))
