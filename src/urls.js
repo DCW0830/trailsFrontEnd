@@ -8,8 +8,8 @@ const backEnd = 'http://localhost:3000/api/v1'
 const url = {
   geocodeAPI: geocodeURL + apiCode.geocode,
   trailAPI: trailsURL + apiCode.trail,
-  login: `${backEnd}/logIn`,
-  signUp: `${backEnd}/signUp`
+  logIn: `${backEnd}/login`,
+  signUp: `${backEnd}/signup`
 }
 
 

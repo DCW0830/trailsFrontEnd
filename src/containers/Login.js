@@ -18,31 +18,15 @@ class Login extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault()
-    fetch('http://localhost:3000/api/v1/login', {
-      method: 'POST',
-      body: JSON.stringify(
-        {user: {
-        username: this.state.username,
-        password: this.state.pw
-      } }),
-      headers:{
-        'Content-Type': 'application/json'
-      }
-    }).then(res => res.json())
-    .then(response => {
-      console.log(response)
-      if (response.errors) {
-        window.alert(`${response.errors}: Try Again!`)
-      }else if(response.current.id){
-        this.setState({
-          username: '',
-          pw: ''
-        })
-      }
+    this.props.logIn(this.state)
+    this.setState({
+      username: '',
+      pw: ''
     })
   }
 
   render() {
+    console.log(this.props)
     return (
       <div>
         <NavBar />
@@ -75,5 +59,11 @@ class Login extends Component {
     );
   }
 }
+const mapStateToProps = (state => {
+  return ({
+    currentUser: state.usersReducers.currentUser,
+    error: state.usersReducers.error
+  })
+})
 
-export default withRouter (connect(null, {logIn})(Login))
+export default withRouter (connect(mapStateToProps, {logIn})(Login))

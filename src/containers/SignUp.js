@@ -19,34 +19,16 @@ class SignUp extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault()
-
-    fetch('http://localhost:3000/api/v1/signup', {
-      method: 'POST',
-      body: JSON.stringify(
-        {user: {
-        username: this.state.username,
-        password: this.state.pw,
-        password_confirmation: this.state.pwConfirmation
-      } }),
-      headers:{
-        'Content-Type': 'application/json'
-      }
-    }).then(res => res.json())
-    .then(response => {
-      console.log(response)
-      if (response.errors) {
-        window.alert(`${response.errors}: Try Again!`)
-      }else if(response.id){
-        this.setState({
-          username: '',
-          pw: '',
-          pwConfirmation: ''
-        })
-      }
+    this.props.createUser(this.state)
+    this.setState({
+      username: '',
+      pw: '',
+      pwConfirmation: ''
     })
   }
 
   render() {
+    console.log(this.props)
     return (
       <div>
         <NavBar />
@@ -86,5 +68,11 @@ class SignUp extends Component {
     );
   }
 }
+const mapStateToProps = (state => {
+  return ({
+    currentUser: state.usersReducers.currentUser,
+    error: state.usersReducers.error
+  })
+})
 
-export default withRouter (connect(null, {createUser})(SignUp))
+export default withRouter (connect(mapStateToProps, {createUser})(SignUp))

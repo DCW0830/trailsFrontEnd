@@ -13,7 +13,6 @@ class FindTrails extends Component {
 
   render() {
     const { geocode, trails, error, loading } = this.props
-    console.log(trails, geocode)
     return (
 
       <div>

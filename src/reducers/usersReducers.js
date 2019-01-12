@@ -1,19 +1,12 @@
 export default (
-  state = { users: [], loading: false, error: null }, action) => {
+  state = { currentUser: null,  error: false }, action) => {
 
   switch (action.type) {
-    case'LOADING_USERS':
-    return {...state, loading: true, error: false }
-
-    case 'FETCH_USERS':
-    return {
-      users: action.payload,
-      loading: false,
-      error: false,
-    }
+    case'LOG_IN':
+    return {currentUser: action.payload, error: false }
 
     case 'FETCH_ERROR':
-    return {...state, loading: true, error: action.payload}
+    return {...state, error: action.payload}
 
     default:
     return state;

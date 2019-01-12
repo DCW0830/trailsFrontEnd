@@ -20,8 +20,8 @@ export function getTrails(search) {
       )
     })
     .catch(error => {
-      dispatch({type: 'FETCH_ERROR', payload: error},
-      console.log(error))
+      dispatch({type: 'FETCH_ERROR', payload: error})
+      console.log(error)
     })
   }
 }
