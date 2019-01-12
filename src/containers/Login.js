@@ -2,13 +2,23 @@ import React, {Component} from 'react';
 import NavBar from '../components/NavBar'
 import {connect} from 'react-redux'
 import { getUser, createUser } from '../actions/users'
+let api
 
 class Login extends Component {
+
   state = {
     username: '',
     pw: '',
     pwConfirmation: '',
     click: false
+  }
+
+  apiChange = () => {
+    if(this.state.click) {
+      api = 'http://localhost:3000/api/v1/signup'
+    }else{
+      api = 'http://localhost:3000/api/v1/login'
+    }
   }
 
   handleChange = (event) => {
@@ -20,11 +30,14 @@ class Login extends Component {
   handleSubmit = (event) => {
     event.preventDefault()
 
-    fetch('http://localhost:3000/api/v1/users', {
+    fetch(api, {
       method: 'POST',
-      body: JSON.stringify({
-        username: this.state.createName
-      }),
+      body: JSON.stringify(
+        {user: {
+        username: this.state.username,
+        password: this.state.pw,
+        password_confirmation: this.state.pwConfirmation
+      } }),
       headers:{
         'Content-Type': 'application/json'
       }
@@ -32,19 +45,20 @@ class Login extends Component {
     .then(response => {
       console.log(response)
       if (response.errors) {
-        window.alert(response.errors)
+        window.alert(response.errors, 'Try Again!')
+      }else if(response.id){
+        this.setState({
+          username: '',
+          pw: '',
+          pwConfirmation: '',
+          click: false
+        })
       }
-    })
-
-    this.setState({
-      username: '',
-      pw: '',
-      pwConfirmation: '',
-      click: false
     })
   }
 
   render() {
+    this.apiChange()
     return (
       <div>
         <NavBar />
@@ -76,9 +90,12 @@ class Login extends Component {
             }
           </form>
         <br/>
-        <span onClick={()=> this.setState({
-            click: !this.state.click
-          })}>
+        <span onClick={ ()=> this.setState({
+          username: '',
+          pw: '',
+          pwConfirmation: '',
+          click: !this.state.click
+        })}>
           {!this.state.click ?
             'Click to Create Account!':
             'Click to Sign In As Existing User!'
