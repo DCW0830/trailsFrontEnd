@@ -15,10 +15,15 @@ export function logIn(userInput) {
       }
     }).then(res => res.json())
     .then(returningUser =>  {
+
       console.log(returningUser)
-      sessionStorage.setItem('id', returningUser.id)
-      dispatch({type: 'LOG_IN', payload: returningUser})
-      history.push('/')
+      if (returningUser.id) {
+        sessionStorage.setItem('id', returningUser.id)
+        history.push('/')
+        dispatch({type: 'LOG_IN', payload: returningUser})
+      } else if (returningUser.errors) {
+        dispatch({type: 'FETCH_ERROR', payload: returningUser.errors})
+      }
     })
     .catch(error => {
       dispatch({type: 'FETCH_ERROR', payload: error})
@@ -43,9 +48,13 @@ export function createUser(userInput) {
     }).then(res => res.json())
     .then(newUser =>  {
       console.log(newUser)
-      sessionStorage.setItem('id', newUser.id)
-      dispatch({type: 'LOG_IN', payload: newUser})
-      history.push('/')
+      if (newUser.id) {
+        sessionStorage.setItem('id', newUser.id)
+        history.push('/')
+        dispatch({type: 'LOG_IN', payload: newUser})
+      } else if (newUser.errors) {
+        dispatch({type: 'FETCH_ERROR', payload: newUser.errors})
+      }
     })
     .catch(error => {
       dispatch({type: 'FETCH_ERROR', payload: error})

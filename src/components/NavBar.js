@@ -32,24 +32,6 @@ const NavBar = () => {
       >Find Trails</NavLink>
 
       <NavLink
-        to='/LogIn'
-        exact
-        style={link}
-        activeStyle={{
-          background: 'darkblue'
-        }}
-      >Log In</NavLink>
-
-      <NavLink
-        to='/SignUp'
-        exact
-        style={link}
-        activeStyle={{
-          background: 'darkblue'
-        }}
-      >Sign Up</NavLink>
-
-      <NavLink
         to='/logOut'
         exact
         style={link}

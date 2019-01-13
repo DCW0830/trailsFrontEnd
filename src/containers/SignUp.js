@@ -28,6 +28,7 @@ class SignUp extends Component {
   }
 
   render() {
+    const { error } = this.props
     return (
       <div>
         <NavBar />
@@ -59,6 +60,7 @@ class SignUp extends Component {
             <button>Create Account!</button>
           </form>
         <br/>
+        {error ? <h2>{error}: Try Again!</h2>:null}
         <span>
           Click to Sign In As Existing User!
         </span>
@@ -69,7 +71,6 @@ class SignUp extends Component {
 }
 const mapStateToProps = (state => {
   return ({
-    currentUser: state.usersReducers.currentUser,
     error: state.usersReducers.error
   })
 })

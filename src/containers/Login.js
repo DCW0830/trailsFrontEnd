@@ -26,6 +26,8 @@ class Login extends Component {
   }
 
   render() {
+    const { error } = this.props
+
     return (
       <div>
         <NavBar />
@@ -48,8 +50,10 @@ class Login extends Component {
             />
             <br/>
             <button>Sign In!</button>
+
           </form>
         <br/>
+        {error ? <h2>{error}: Verify Your Username And Password!</h2>:null}
         <span>
           Click to Create Account!
         </span>
@@ -60,7 +64,6 @@ class Login extends Component {
 }
 const mapStateToProps = (state => {
   return ({
-    currentUser: state.usersReducers.currentUser,
     error: state.usersReducers.error
   })
 })
