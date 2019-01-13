@@ -1,4 +1,5 @@
 import url from '../urls'
+import history from '../history'
 
 export function logIn(userInput) {
   return (dispatch) => {
@@ -17,6 +18,7 @@ export function logIn(userInput) {
       console.log(returningUser)
       sessionStorage.setItem('id', returningUser.id)
       dispatch({type: 'LOG_IN', payload: returningUser})
+      history.push('/')
     })
     .catch(error => {
       dispatch({type: 'FETCH_ERROR', payload: error})
@@ -43,6 +45,7 @@ export function createUser(userInput) {
       console.log(newUser)
       sessionStorage.setItem('id', newUser.id)
       dispatch({type: 'LOG_IN', payload: newUser})
+      history.push('/')
     })
     .catch(error => {
       dispatch({type: 'FETCH_ERROR', payload: error})
