@@ -14,6 +14,8 @@ export function logIn(userInput) {
       }
     }).then(res => res.json())
     .then(returningUser =>  {
+      console.log(returningUser)
+      sessionStorage.setItem('id', returningUser.id)
       dispatch({type: 'LOG_IN', payload: returningUser})
     })
     .catch(error => {
@@ -38,6 +40,8 @@ export function createUser(userInput) {
       }
     }).then(res => res.json())
     .then(newUser =>  {
+      console.log(newUser)
+      sessionStorage.setItem('id', newUser.id)
       dispatch({type: 'LOG_IN', payload: newUser})
     })
     .catch(error => {

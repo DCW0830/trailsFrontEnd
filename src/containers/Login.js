@@ -26,7 +26,6 @@ class Login extends Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <div>
         <NavBar />

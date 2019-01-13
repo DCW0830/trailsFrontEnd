@@ -14,7 +14,7 @@ const NavBar = () => {
   return (
     <div>
       <NavLink
-        to="/home"
+        to="/"
         exact
         style={link}
         activeStyle={{
@@ -32,13 +32,13 @@ const NavBar = () => {
       >Find Trails</NavLink>
 
       <NavLink
-        to='/'
+        to='/LogIn'
         exact
         style={link}
         activeStyle={{
           background: 'darkblue'
         }}
-      >LogIn</NavLink>
+      >Log In</NavLink>
 
       <NavLink
         to='/SignUp'
@@ -47,7 +47,16 @@ const NavBar = () => {
         activeStyle={{
           background: 'darkblue'
         }}
-      >SignUp</NavLink>
+      >Sign Up</NavLink>
+
+      <NavLink
+        to='/logOut'
+        exact
+        style={link}
+        activeStyle={{
+          background: 'darkblue'
+        }}
+      >Log Out</NavLink>
     </div>
   )
 }
