@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import NavBar from '../components/NavBar'
 import {connect} from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { createUser } from '../actions/users'
@@ -31,7 +30,6 @@ class SignUp extends Component {
     const { error } = this.props
     return (
       <div>
-        <NavBar />
         <h2>Create Account!</h2>
           <form onSubmit={this.handleSubmit}>
             <label>Username:</label>

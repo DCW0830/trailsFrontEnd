@@ -21,7 +21,7 @@ class FindTrailsForm extends Component {
       <div>
        <form onSubmit={this.handleSubmit}>
          <label>
-           <h2>Search Trails by City/State or by Zip Code:</h2>
+           Enter City/State or Zip Code:
          </label>
          <input
            value={this.state.search}

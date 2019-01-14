@@ -1,5 +1,5 @@
 export default (
-  state = { currentUser: null,  error: false }, action) => {
+  state = { currentUser: {},  error: false }, action) => {
 
   switch (action.type) {
     case'LOG_IN':

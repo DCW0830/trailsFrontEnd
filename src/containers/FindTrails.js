@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import FindTrailsForm from './FindTrailsForm'
+import SearchedTrailList from './SearchedTrailList'
 import NavBar from '../components/NavBar'
 
 const link = {
@@ -12,21 +13,24 @@ const link = {
 class FindTrails extends Component {
 
   render() {
-    const { geocode, trails, error, loading } = this.props
-    return (
+    const { city, state, county, zipCode} =this.props.location
+    const { error, loading, trails} = this.props
 
+    return (
       <div>
         <NavBar />
-        <FindTrailsForm />
-        <h1>List of the Search Trails</h1>
-        <iframe
-          style={link}
-          frameBorder="0"
-          scrolling="yes"
-          src="https://www.hikingproject.com/widget?v=7&map=4&type=trail&id=7017613&x=34.5086&y=-93.0684&z=12"
-        />
-        // "https://www.hikingproject.com/widget/map?favs=1&location=fixed&x=-10281348&y=4158786&z=9.1&h=400"
+        {loading? <h2>Loading Trails...</h2>: <h2>Search For Trails!</h2>}
+        {city? <h1>Trail Results For: {city.long_name}, {state.long_name}, {zipCode.long_name}, {county.long_name}</h1>: null}
+        {trails.trails? <h1>Showing: {trails.trails.length} Results</h1>: null}
 
+        <FindTrailsForm />
+        {error? <h2>Error: Did you Enter a Valid City/State or Zip Code?</h2>: null}
+        <div>
+          <iframe/>
+        </div>
+        <div>
+          <SearchedTrailList />
+        </div>
       </div>
     );
   }
@@ -34,10 +38,10 @@ class FindTrails extends Component {
 
 const mapStateToProps = (state => {
   return ({
-    geocode: state.trailsReducers.geocode,
-    trails: state.trailsReducers.trails,
+    location: state.trailsReducers.location,
     error: state.trailsReducers.error,
-    loading: state.trailsReducers.loading
+    loading: state.trailsReducers.loading,
+    trails: state.trailsReducers.trails
   })
 })
 

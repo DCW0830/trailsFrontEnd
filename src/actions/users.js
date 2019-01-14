@@ -16,7 +16,6 @@ export function logIn(userInput) {
     }).then(res => res.json())
     .then(returningUser =>  {
 
-      console.log(returningUser)
       if (returningUser.id) {
         sessionStorage.setItem('id', returningUser.id)
         history.push('/')
@@ -27,7 +26,6 @@ export function logIn(userInput) {
     })
     .catch(error => {
       dispatch({type: 'FETCH_ERROR', payload: error})
-      console.log(error)
     })
   }
 }
@@ -47,7 +45,6 @@ export function createUser(userInput) {
       }
     }).then(res => res.json())
     .then(newUser =>  {
-      console.log(newUser)
       if (newUser.id) {
         sessionStorage.setItem('id', newUser.id)
         history.push('/')
@@ -58,7 +55,6 @@ export function createUser(userInput) {
     })
     .catch(error => {
       dispatch({type: 'FETCH_ERROR', payload: error})
-      console.log(error)
     })
   }
 }
