@@ -9,7 +9,7 @@ class SearchedTrailList extends Component {
       return this.props.trails.trails.map(trailObj => {
         return <Trail key={trailObj.id} trail={trailObj} />
       })
-    }  
+    }
   }
 
   render() {
@@ -17,19 +17,21 @@ class SearchedTrailList extends Component {
     console.log(trails)
 
     return (
-
-      <table className="trail-list" >
-      <tbody>
-        <tr>
-          <th>Name</th>
-          <th>Difficulty</th>
-          <th>Length</th>
-          <th>Location</th>
-          <th>Stars</th>
-        </tr>
-        {this.createTrail()}
-      </tbody>
-    </table>
+      <form>
+        <table className="trail-list" >
+          <tbody>
+            <tr>
+              <th>Name</th>
+              <th>Difficulty</th>
+              <th>Length</th>
+              <th>Location</th>
+              <th>Stars</th>
+              <th>Favorite</th>
+            </tr>
+            {this.createTrail()}
+          </tbody>
+        </table>
+      </form>
     );
   }
 }

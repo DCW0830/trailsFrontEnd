@@ -13,6 +13,7 @@ export default (
 
     case'FETCH_GEOCODE':
     let base = action.payload.results[0].address_components
+    console.log(action.payload.results)
     return {...state, error: false, loading: true,
       latLog: action.payload.results[0].geometry.location,
       location: {
