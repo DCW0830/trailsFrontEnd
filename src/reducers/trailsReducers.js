@@ -39,6 +39,15 @@ export default (
     case 'FETCH_ERROR':
     return {...state, loading: true, error: action.payload}
 
+    case 'CLEAR_STATE' :
+    return {
+      error: null,
+      loading: false,
+      location: {},
+      latLog: {},
+      trails: []
+    }
+
     default:
     return state;
   }

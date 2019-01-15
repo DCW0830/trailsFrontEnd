@@ -34,7 +34,6 @@ class SearchedTrailList extends Component {
 
   render() {
     const {trails} = this.props
-    console.log(trails)
 
     return (
       <form>
