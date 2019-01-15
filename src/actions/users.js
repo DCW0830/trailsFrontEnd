@@ -59,6 +59,18 @@ export function logIn(userInput) {
   }
 }
 
+export function addFavorite (trailId) {
+  return (dispatch) => {
+    dispatch({type: 'ADD_FAVORITE'})
+  }
+}
+
+export function deleteFavorite (trailId) {
+  return (dispatch) => {
+    dispatch({type: 'DELETE_FAVORITE'})
+  }
+}
+
 export function clearState() {
   return (dispatch) => {
     dispatch({type: 'CLEAR_STATE'})

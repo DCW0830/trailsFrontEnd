@@ -7,24 +7,10 @@ class SearchedTrailList extends Component {
     selectedTrails: []
   }
 
-  handleClick = (event, trailId) => {
-    if(event.target.checked) {
-      this.setState({
-        selectedTrails: [...this.state.selectedTrails, trailId]
-      }, ()=>console.log(this.state.selectedTrails))
-      console.log('hi')
-    } else {
-      this.setState({
-        selectedTrails: this.state.selectedTrails.splice( this.state.selectedTrails.indexOf(trailId), 1 )
-      }, ()=> console.log(this.state.selectedTrails))
-    }
-  }
-
   createTrail = () => {
     if (this.props.trails.trails) {
       return this.props.trails.trails.map(trailObj => {
         return <Trail
-          handleClick={this.handleClick}
           key={trailObj.id}
           trail={trailObj}
         />
