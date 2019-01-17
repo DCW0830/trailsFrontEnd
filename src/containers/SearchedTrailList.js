@@ -37,7 +37,6 @@ class SearchedTrailList extends Component {
   }
 
   render() {
-    console.log(this.props.userTrails)
     return (
       <form>
         <table className="trail-list" >

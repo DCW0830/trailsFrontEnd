@@ -39,7 +39,7 @@ export default (
     }
 
     case 'FETCH_ERROR':
-    return {...state, loading: true, error: action.payload}
+    return {...state, loading: false, error: action.payload}
 
     case 'CLEAR_STATE' :
     return {

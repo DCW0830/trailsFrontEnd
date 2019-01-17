@@ -26,8 +26,24 @@ export function getTrails(search) {
   }
 }
 
-export function fetchUserTrails(userTrails) {
-  console.log(userTrails)
+export function fetchUserTrails(string) {
+  return (dispatch) => {
+    if(string) {
+      dispatch({type: 'LOADING_USER_TRAILS'})
+      fetch(`${url.trailApiById}&ids=${string}`)
+      .then(res => res.json())
+      .then(userTrails =>  {
+        dispatch({type: 'FETCH_USER_TRAILS', payload: userTrails})
+        console.log(userTrails)
+      })
+      .catch(error => {
+        dispatch({type: 'FETCH_ERROR', payload: error})
+        console.log(error)
+      })
+    } else {
+      return null
+    }
+  }
 }
 
 
