@@ -25,3 +25,14 @@ export function getTrails(search) {
     })
   }
 }
+
+export function fetchUserTrails(userTrails) {
+  console.log(userTrails)
+}
+
+
+export function trailMap (trailNumber) {
+  return (dispatch) => {
+    dispatch({type: 'TRAIL_MAP', payload: trailNumber})
+  }
+}

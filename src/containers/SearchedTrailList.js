@@ -4,38 +4,56 @@ import Trail from '../components/Trail'
 
 class SearchedTrailList extends Component {
   state = {
-    selectedTrails: []
+    trailsCounter: 0
+  }
+
+  handleNext = (event) => {
+    event.preventDefault()
+    this.setState({
+      trailsCounter: this.state.trailsCounter + 20
+    })
+  }
+
+  handlePrevious = (event) => {
+    event.preventDefault()
+    if (this.state.trailsCounter !== 0) {
+      this.setState({
+        trailsCounter: this.state.trailsCounter - 20
+      })
+    }
   }
 
   createTrail = () => {
     if (this.props.trails.trails) {
-      return this.props.trails.trails.map(trailObj => {
-        return <Trail
-          key={trailObj.id}
-          trail={trailObj}
-        />
+      return this.props.trails.trails.map((trailObj, idx) => {
+
+        if (idx >= this.state.trailsCounter && idx < this.state.trailsCounter + 20) {
+          return <Trail key={trailObj.id} trail={trailObj}/>
+        } else {
+          return null
+        }
       })
     }
   }
 
   render() {
-    const {trails} = this.props
-
+    console.log(this.props.userTrails)
     return (
       <form>
         <table className="trail-list" >
           <tbody>
             <tr>
-              <th>Name</th>
+              <th onClick={()=>console.log('hello')}>Name</th>
               <th>Difficulty</th>
               <th>Length</th>
               <th>Location</th>
-              <th>Stars</th>
               <th>Favorite</th>
             </tr>
             {this.createTrail()}
           </tbody>
         </table>
+        <button onClick={this.handlePrevious}>Previous 20</button>
+        <button onClick={this.handleNext}>Next 20</button>
       </form>
     );
   }
@@ -44,6 +62,7 @@ class SearchedTrailList extends Component {
 const mapStateToProps = (state => {
   return ({
     trails: state.trailsReducers.trails,
+    userTrails: state.usersReducers.userTrails
   })
 })
 

@@ -3,8 +3,9 @@ export default (
     error: null,
     loading: false,
     location: {},
-    latLog: {},
-    trails: []
+    latLon: {},
+    trails: [],
+    trailNumber: ''
   }, action) => {
 
   switch (action.type) {
@@ -13,9 +14,9 @@ export default (
 
     case'FETCH_GEOCODE':
     let base = action.payload.results[0].address_components
-    console.log(action.payload.results)
-    return {...state, error: false, loading: true,
-      latLog: action.payload.results[0].geometry.location,
+    let baseLatLon = action.payload.results[0].geometry.location
+
+    return {...state, error: false, loading: true, latLon: baseLatLon,
       location: {
         city:base[1],
         state:base[3],
@@ -33,7 +34,8 @@ export default (
       ...state,
       error: false,
       loading: false,
-      trails: action.payload
+      trails: action.payload,
+      trailNumber: action.payload.trails[0].id
     }
 
     case 'FETCH_ERROR':
@@ -44,9 +46,12 @@ export default (
       error: null,
       loading: false,
       location: {},
-      latLog: {},
+      latLon: {},
       trails: []
     }
+
+    case 'TRAIL_MAP':
+    return{...state, loading: false, trailNumber: action.payload}
 
     default:
     return state;

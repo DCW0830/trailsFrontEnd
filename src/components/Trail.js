@@ -1,27 +1,37 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import {addFavorite, deleteFavorite} from '../actions/users'
+import {trailMap} from'../actions/trails'
 
 class Trail extends Component{
 
-  handleClick = (event, trailId) => {
+  handleClick = (event, trailNumber) => {
+
+
     if(event.target.checked) {
-      this.props.addFavorite()
+      this.props.addFavorite(trailNumber)
     } else {
-      this.props.deleteFavorite()
+
+      let foundTrail
+      this.props.userTrails.forEach(userTrailObj => {
+        if(userTrailObj.trail_number === trailNumber){
+         foundTrail = userTrailObj
+        } else {
+          return null
+        }
+      })
+      this.props.deleteFavorite(foundTrail.id)
     }
   }
   render() {
-
-    const {name, difficulty, length, location, stars, id} = this.props.trail
+    const {name, difficulty, length, location, id} = this.props.trail
 
     return (
-      <tr onClick={()=> console.log} className="song">
+      <tr onClick={()=> this.props.trailMap(id)} >
         <td>{name}</td>
         <td>{difficulty}</td>
         <td>{length}</td>
         <td>{location}</td>
-        <td>{stars}</td>
         <td>
           <input
             onChange={(event)=>this.handleClick(event, id)}
@@ -32,5 +42,10 @@ class Trail extends Component{
     )
   }
 }
+const mapStateToProps = (state => {
+  return ({
+    userTrails: state.usersReducers.userTrails
+  })
+})
 
-export default connect(null, {addFavorite, deleteFavorite}) (Trail)
+export default connect(mapStateToProps, {addFavorite, deleteFavorite, trailMap}) (Trail)

@@ -7,9 +7,13 @@ import SelectedTrailMap from '../components/SelectedTrailMap'
 
 class FindTrails extends Component {
 
+  state = {
+    trailsCounter: 0
+  }
+
   render() {
     const { city, state, county, zipCode} =this.props.location
-    const { error, loading, trails, latLog} = this.props
+    const { error, loading, trails} = this.props
 
     return (
       <div>
@@ -18,20 +22,25 @@ class FindTrails extends Component {
         </div>
 
         <div>
+          <br/>
           {loading? <h2>Loading Trails...</h2>: <h2>Search For Trails!</h2>}
-          {city? <h1>Trail Results For: {city.long_name}, {state.long_name}, {zipCode.long_name}, {county.long_name}</h1>: null}
-          {trails.trails? <h1>Showing: {trails.trails.length} Results</h1>: null}
+          {city? `Trail Results For: ${city.long_name}`: null}
+          {state? ` ${state.long_name}`: null}
+          {zipCode? ` ${zipCode.long_name}`: null}
+          {county? ` ${county.long_name}`: null}
+          {trails.trails? <h1>Showing:{this.state.trailsCounter + 20} of {trails.trails.length} Results</h1>: null}
         </div>
 
         <div>
           <FindTrailsForm />
-          {error? <h2>Error: Did you Enter a Valid City/State or Zip Code?</h2>: null}
+          {error? <h2>Error: Did you Enter a Valid City, State or Zip Code?</h2>: null}
         </div>
 
         <div>
-          <SearchedTrailList />
+          {trails.trails? <SearchedTrailList /> : null}
         </div>
         <div>
+          {trails.trails? <SelectedTrailMap/> : null}
         </div>
       </div>
     );
@@ -44,7 +53,6 @@ const mapStateToProps = (state => {
     error: state.trailsReducers.error,
     loading: state.trailsReducers.loading,
     trails: state.trailsReducers.trails,
-    latLog: state.trailsReducers.latLog
   })
 })
 

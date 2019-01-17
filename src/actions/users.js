@@ -44,7 +44,6 @@ export function logIn(userInput) {
       }
     }).then(res => res.json())
     .then(returningUser =>  {
-
       if (returningUser.id) {
         sessionStorage.setItem('id', returningUser.id)
         history.push('/')
@@ -59,15 +58,54 @@ export function logIn(userInput) {
   }
 }
 
-export function addFavorite (trailId) {
+export function addFavorite (trailNumber) {
   return (dispatch) => {
-    dispatch({type: 'ADD_FAVORITE'})
+    fetch(url.createTrail, {
+      method: 'POST',
+      body: JSON.stringify({
+        user_id: sessionStorage.id,
+        trail: {
+          trail_number: trailNumber,
+        }
+      }),
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+    .then(trail =>  {
+      console.log(trail)
+      if (trail.id) {
+        dispatch({type: 'ADD_USER_TRAIL', payload: trail})
+      } else if (trail.errors) {
+        dispatch({type: 'FETCH_ERROR', payload: trail.errors})
+      }
+    })
+    .catch(error => {
+      dispatch({type: 'FETCH_ERROR', payload: error})
+    })
   }
 }
 
 export function deleteFavorite (trailId) {
+  console.log(trailId)
   return (dispatch) => {
-    dispatch({type: 'DELETE_FAVORITE'})
+    fetch(`${url.deleteTrail}/${trailId}`, {
+      method: 'DELETE',
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+    .then(trail =>  {
+      console.log(trail)
+      if (trail.id) {
+        dispatch({type: 'DELETE_FAVORITE', payload: trail})
+      } else if (trail.errors) {
+        dispatch({type: 'FETCH_ERROR', payload: trail.errors})
+      }
+    })
+    .catch(error => {
+      dispatch({type: 'FETCH_ERROR', payload: error})
+    })
   }
 }
 
