@@ -72,14 +72,14 @@ export default (
        })
      let toUnique = [...new Set(toArray)];
      let toString = toUnique.join(',')
-
-
+     
      return {...state, userTrailsString: toString, userTrails: newUserTrails}
 
      case 'LOADING_USER_TRAILS':
      return {...state, error: false, loading: true}
 
      case 'FETCH_USER_TRAILS':
+     console.log(action.payload.trails)
      return {...state, error: false, loading: false,
       fetchedUserTrails: action.payload.trails}
 

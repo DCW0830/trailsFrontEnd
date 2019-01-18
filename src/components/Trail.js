@@ -5,11 +5,14 @@ import {trailMap} from'../actions/trails'
 
 class Trail extends Component{
 
+  state = {
+    click: false
+  }
+
   handleClick = (event, trailNumber) => {
-
-
-    if(event.target.checked) {
+    if(!this.state.click) {
       this.props.addFavorite(trailNumber)
+      this.setState({ click: !this.state.click})
     } else {
 
       let foundTrail
@@ -21,6 +24,7 @@ class Trail extends Component{
         }
       })
       this.props.deleteFavorite(foundTrail.id)
+      this.setState({ click: !this.state.click})
     }
   }
   render() {
@@ -32,11 +36,8 @@ class Trail extends Component{
         <td>{difficulty}</td>
         <td>{length}</td>
         <td>{location}</td>
-        <td>
-          <input
-            onChange={(event)=>this.handleClick(event, id)}
-            type ='checkbox'
-          />
+        <td onClick={(event)=>this.handleClick(event, id)}>
+        {this.state.click? 'Remove' : 'Add'}
         </td>
       </tr>
     )
