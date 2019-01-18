@@ -5,26 +5,19 @@ import SelectedTrailMap from '../components/SelectedTrailMap'
 import {connect} from 'react-redux'
 import {fetchUserTrails} from '../actions/trails'
 
-
 class Home extends Component {
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.userTrailsString !== this.props.userTrailsString) {
-      this.props.fetchUserTrails(this.props.userTrailsString)
-    }
-  }
 
   render() {
     const { username } = this.props.currentUser
-    const {userTrailsString, fetchedUserTrails} =this.props
-    console.log(fetchedUserTrails)
-
+    const {userTrailsString, fetchedUserTrails, loading} =this.props
+    
     return (
       <div>
         <div>
           <NavBar />
         </div>
         <h1>Welcome to Base Camp: {username}!</h1>
+        {loading? this.props.fetchUserTrails(userTrailsString) : null}
         <div>
           {userTrailsString? <UserTrailList userTrails={fetchedUserTrails}/> : <h2>You Currently Have No Favorite Trails. Go Find Some!</h2>}
         </div>
@@ -39,11 +32,11 @@ class Home extends Component {
 
 const mapStateToProps = (state => {
   return({
+    loading: state.usersReducers.loading,
     currentUser: state.usersReducers.currentUser,
     userTrailsString: state.usersReducers.userTrailsString,
     fetchedUserTrails: state.usersReducers.fetchedUserTrails
   })
 })
-
 
 export default connect(mapStateToProps, {fetchUserTrails})(Home)

@@ -21,15 +21,14 @@ export function getTrails(search) {
     })
     .catch(error => {
       dispatch({type: 'FETCH_ERROR', payload: error})
-      console.log(error)
     })
   }
 }
 
 export function fetchUserTrails(string) {
+  console.log('fetching trails')
   return (dispatch) => {
     if(string) {
-      dispatch({type: 'LOADING_USER_TRAILS'})
       fetch(`${url.trailApiById}&ids=${string}`)
       .then(res => res.json())
       .then(userTrails =>  {
@@ -38,14 +37,12 @@ export function fetchUserTrails(string) {
       })
       .catch(error => {
         dispatch({type: 'FETCH_ERROR', payload: error})
-        console.log(error)
       })
     } else {
       return null
     }
   }
 }
-
 
 export function trailMap (trailNumber) {
   return (dispatch) => {

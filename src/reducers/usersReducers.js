@@ -23,11 +23,11 @@ export default (
       userTrails: action.payload.trails,
       userTrailsString: newString,
       error: false,
-      loading: false
+      loading: true
     }
 
     case 'FETCH_ERROR':
-    return {...state, error: action.payload}
+    return {...state, loading: false, error: action.payload}
 
     case 'CLEAR_STATE':
     return {
@@ -53,7 +53,7 @@ export default (
     let convertedString = unique.join(',')
 
     return {
-      ...state, error: false, userTrailsString: convertedString,
+      ...state, loading: true, error: false, userTrailsString: convertedString,
        userTrails: [
          ...state.userTrails, {
            id: action.payload.id,
@@ -72,11 +72,8 @@ export default (
        })
      let toUnique = [...new Set(toArray)];
      let toString = toUnique.join(',')
-     
-     return {...state, userTrailsString: toString, userTrails: newUserTrails}
 
-     case 'LOADING_USER_TRAILS':
-     return {...state, error: false, loading: true}
+     return {...state, loading: true, userTrailsString: toString, userTrails: newUserTrails}
 
      case 'FETCH_USER_TRAILS':
      console.log(action.payload.trails)

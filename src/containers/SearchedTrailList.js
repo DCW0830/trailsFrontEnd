@@ -1,3 +1,4 @@
+
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import Trail from '../components/Trail'
@@ -9,6 +10,7 @@ class SearchedTrailList extends Component {
 
   handleNext = (event) => {
     event.preventDefault()
+    if(this.state.trailsCounter + 20 <= this.props.trails.trails.length)
     this.setState({
       trailsCounter: this.state.trailsCounter + 20
     })
@@ -37,23 +39,34 @@ class SearchedTrailList extends Component {
   }
 
   render() {
+    const { city, state, county, zipCode} =this.props.location
+    const {trails} = this.props
     return (
-      <form>
-        <table className="trail-list" >
-          <tbody>
-            <tr>
-              <th onClick={()=>console.log('hello')}>Name</th>
-              <th>Difficulty</th>
-              <th>Length</th>
-              <th>Location</th>
-              <th>Favorite</th>
-            </tr>
-            {this.createTrail()}
-          </tbody>
-        </table>
-        <button onClick={this.handlePrevious}>Previous 20</button>
-        <button onClick={this.handleNext}>Next 20</button>
-      </form>
+      <div>
+        <br/>
+        {city? `Trail Results For: ${city.long_name}`: null}
+        {state? ` ${state.long_name}`: null}
+        {zipCode? ` ${zipCode.long_name}`: null}
+        {county? ` ${county.long_name}`: null}
+        {trails.trails? <h1>Showing:{this.state.trailsCounter + 20} of {trails.trails.length} Results</h1>: null}
+
+        <form>
+          <table className="trail-list" >
+            <tbody>
+              <tr>
+                <th onClick={()=>console.log('hello')}>Name</th>
+                <th>Difficulty</th>
+                <th>Length</th>
+                <th>Location</th>
+                <th>Favorite</th>
+              </tr>
+              {this.createTrail()}
+            </tbody>
+          </table>
+          <button onClick={this.handlePrevious}>Previous 20</button>
+          <button onClick={this.handleNext}>Next 20</button>
+        </form>
+      </div>
     );
   }
 }
@@ -61,7 +74,9 @@ class SearchedTrailList extends Component {
 const mapStateToProps = (state => {
   return ({
     trails: state.trailsReducers.trails,
-    userTrails: state.usersReducers.userTrails
+    userTrails: state.usersReducers.userTrails,
+    location: state.trailsReducers.location,
+
   })
 })
 

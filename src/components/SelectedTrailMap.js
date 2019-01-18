@@ -14,6 +14,8 @@ class SelectedTrailMap extends Component  {
     return (
       <div>
         <iframe
+          title='selectedTrail'
+          sandbox="allow-pointer-lock allow-same-origin allow-scripts"
           style= {link}
           frameBorder="0"
           scrolling="no"
