@@ -2,6 +2,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import Trail from '../components/Trail'
+import {addFavorite, deleteFavorite} from '../actions/users'
+import {trailMap} from'../actions/trails'
 
 class SearchedTrailList extends Component {
   state = {
@@ -30,7 +32,13 @@ class SearchedTrailList extends Component {
       return this.props.trails.trails.map((trailObj, idx) => {
 
         if (idx >= this.state.trailsCounter && idx < this.state.trailsCounter + 20) {
-          return <Trail key={trailObj.id} trail={trailObj}/>
+          return <Trail
+            addFavorite={this.props.addFavorite}
+            deleteFavorite={this.props.deleteFavorite}
+            trailMap={this.props.trailMap}
+            key={trailObj.id}
+            trail={trailObj}
+            userTrails={this.props.userTrails}/>
         } else {
           return null
         }
@@ -80,4 +88,4 @@ const mapStateToProps = (state => {
   })
 })
 
-export default connect(mapStateToProps)(SearchedTrailList)
+export default connect(mapStateToProps, {addFavorite, deleteFavorite, trailMap})(SearchedTrailList)

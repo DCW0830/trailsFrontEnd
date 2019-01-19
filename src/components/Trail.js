@@ -1,7 +1,4 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux'
-import {addFavorite, deleteFavorite} from '../actions/users'
-import {trailMap} from'../actions/trails'
 
 class Trail extends Component{
 
@@ -43,10 +40,6 @@ class Trail extends Component{
     )
   }
 }
-const mapStateToProps = (state => {
-  return ({
-    userTrails: state.usersReducers.userTrails
-  })
-})
 
-export default connect(mapStateToProps, {addFavorite, deleteFavorite, trailMap}) (Trail)
+
+export default Trail
