@@ -7,14 +7,16 @@ import {trailMap} from'../actions/trails'
 
 class SearchedTrailList extends Component {
   state = {
-    trailsCounter: 0
+    trailsCounter: 0,
+    pageTurn: 1
   }
 
   handleNext = (event) => {
     event.preventDefault()
+
     if(this.state.trailsCounter + 20 <= this.props.trails.trails.length)
     this.setState({
-      trailsCounter: this.state.trailsCounter + 20
+      trailsCounter: this.state.trailsCounter + 20, pageTurn: this.state.pageTurn + 1
     })
   }
 
@@ -22,9 +24,20 @@ class SearchedTrailList extends Component {
     event.preventDefault()
     if (this.state.trailsCounter !== 0) {
       this.setState({
-        trailsCounter: this.state.trailsCounter - 20
+        trailsCounter: this.state.trailsCounter - 20, pageTurn: this.state.pageTurn - 1
       })
     }
+  }
+
+  resultsCount = () => {
+    let currentNumber
+    let number = this.props.trails.trails.length / 20
+    if (this.state.pageTurn <= number) {
+      currentNumber = this.state.pageTurn * 20
+    } else {
+      currentNumber = number * 20
+    }
+    return currentNumber
   }
 
   createTrail = () => {
@@ -56,7 +69,7 @@ class SearchedTrailList extends Component {
         {state? ` ${state.long_name}`: null}
         {zipCode? ` ${zipCode.long_name}`: null}
         {county? ` ${county.long_name}`: null}
-        {trails.trails? <h1>Showing:{this.state.trailsCounter + 20} of {trails.trails.length} Results</h1>: null}
+        {trails.trails? <h1>Showing: {this.resultsCount()} of {trails.trails.length} Results</h1>: null}
 
         <form>
           <table className="trail-list" >
@@ -71,8 +84,10 @@ class SearchedTrailList extends Component {
               {this.createTrail()}
             </tbody>
           </table>
-          <button onClick={this.handlePrevious}>Previous 20</button>
-          <button onClick={this.handleNext}>Next 20</button>
+          <p>
+            {trails.trails.length > 20? <button onClick={this.handlePrevious}>Previous Page</button>:null}
+            {trails.trails.length > 20? <button onClick={this.handleNext}>Next Page</button>:null}
+          </p>
         </form>
       </div>
     );
