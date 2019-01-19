@@ -1,0 +1,13 @@
+table.trail-list {
+  margin: 20px 0;
+  width: 100%;
+}
+
+table.trail-list td,
+table.trail-list th {
+  border: 1px solid #cbcbcb;
+  padding: 15px;
+}
+
+table.trail-list th {
+  background-color: #e0e0e0

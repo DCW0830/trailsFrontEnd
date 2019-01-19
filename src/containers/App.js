@@ -1,21 +1,39 @@
-import React from 'react'
-import Home from '../components/Home'
-import { BrowserRouter as Router, Route} from 'react-router-dom'
-import Login from '../components/Login'
-import MyTrails from './MyTrails'
+import React, {Component} from 'react'
+import Home from './Home'
+import LogIn from './LogIn'
+import SignUp from './SignUp'
 import FindTrails from './FindTrails'
+import history  from '../history'
+import {connect} from 'react-redux'
+import {clearState} from '../actions/users'
+import {  Router, Route, Redirect} from 'react-router-dom'
 
-const App = () => {
-  return (
-    <Router>
-      <React.Fragment>
-        <Route exact path="/Home" component={Home} />
-        <Route exact path="/" component={Login} />
-        <Route exact path="/MyTrails" component={MyTrails} />
-        <Route exact path="/FindTrails" component={FindTrails} />
-      </React.Fragment>
-    </Router>
-  )
+class App extends Component {
+
+  logOut = () => {
+    if(sessionStorage['id']) sessionStorage.removeItem('id')
+    this.props.clearState()
+    return <Redirect to='/LogIn' />
+  }
+
+  render() {
+    return (
+      <Router history={history}>
+        <React.Fragment>
+          <Route exact path="/" render={ () => loggedIn() ? <Home/> : <Redirect to='/LogIn' /> }/>
+          <Route path="/LogIn" component={()=> loggedIn() ? <Redirect to="/" /> : <LogIn/> }/>
+          <Route path="/SignUp" component={()=> loggedIn() ? <Redirect to='/' /> : <SignUp/> }/>
+          <Route path="/FindTrails" component={()=> loggedIn() ? <FindTrails/> : <Redirect to='/LogIn'/> }/>
+          <Route path='/LogOut' component={() => this.logOut()} />
+
+        </React.Fragment>
+      </Router>
+    )
+  }
 }
 
-export default App
+const loggedIn = () => !!sessionStorage['id']
+
+
+
+export default connect (null, {clearState})(App)

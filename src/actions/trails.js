@@ -20,8 +20,32 @@ export function getTrails(search) {
       )
     })
     .catch(error => {
-      dispatch({type: 'FETCH_ERROR', payload: error},
-      console.log(error))
+      dispatch({type: 'FETCH_ERROR', payload: error})
     })
+  }
+}
+
+export function fetchUserTrails(string) {
+  console.log('fetching trails')
+  return (dispatch) => {
+    if(string) {
+      fetch(`${url.trailApiById}&ids=${string}`)
+      .then(res => res.json())
+      .then(userTrails =>  {
+        dispatch({type: 'FETCH_USER_TRAILS', payload: userTrails})
+        console.log(userTrails)
+      })
+      .catch(error => {
+        dispatch({type: 'FETCH_ERROR', payload: error})
+      })
+    } else {
+      return null
+    }
+  }
+}
+
+export function trailMap (trailNumber) {
+  return (dispatch) => {
+    dispatch({type: 'TRAIL_MAP', payload: trailNumber})
   }
 }

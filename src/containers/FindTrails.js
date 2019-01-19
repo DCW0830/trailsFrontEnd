@@ -1,33 +1,31 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import FindTrailsForm from '../components/FindTrailsForm'
+import FindTrailsForm from './FindTrailsForm'
+import SearchedTrailList from './SearchedTrailList'
 import NavBar from '../components/NavBar'
-
-const link = {
-  width: '1000px',
-  padding: '12px',
-  height: '1000px'
-}
+import SelectedTrailMap from '../components/SelectedTrailMap'
 
 class FindTrails extends Component {
 
   render() {
-    const { geocode, trails, error, loading } = this.props
-    console.log(trails, geocode)
+    const {error, trails, loading} = this.props
+
     return (
-
       <div>
-        <NavBar />
-        <FindTrailsForm />
-        <h1>List of the Search Trails</h1>
-        <iframe
-          style={link}
-          frameBorder="0"
-          scrolling="yes"
-          src="https://www.hikingproject.com/widget?v=7&map=4&type=trail&id=7017613&x=34.5086&y=-93.0684&z=12"
-        />
-        // "https://www.hikingproject.com/widget/map?favs=1&location=fixed&x=-10281348&y=4158786&z=9.1&h=400"
-
+        <div>
+          <NavBar />
+        </div>
+        {loading? <h2>Loading Trails...</h2>: <h2>Search For Trails!</h2>}
+        <div>
+          <FindTrailsForm />
+          {error? <h2>Error: Did you Enter a Valid City, State or Zip Code?</h2>: null}
+        </div>
+        <div>
+          {trails.trails? <SearchedTrailList /> : null}
+        </div>
+        <div>
+          {trails.trails? <SelectedTrailMap/> : null}
+        </div>
       </div>
     );
   }
@@ -35,10 +33,8 @@ class FindTrails extends Component {
 
 const mapStateToProps = (state => {
   return ({
-    geocode: state.trailsReducers.geocode,
     trails: state.trailsReducers.trails,
-    error: state.trailsReducers.error,
-    loading: state.trailsReducers.loading
+    loading: state.trailsReducers.loading,
   })
 })
 
