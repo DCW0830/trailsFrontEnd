@@ -7,6 +7,8 @@ This is typically incorrect to post these keys like this but in order for this a
 You will also need to download and run the backend for this application found here:
 backend: https://github.com/DCW0830/trailsbackend
 
+After downloading this file you will need to run npm install or yarn install. 
+
 The backend needs to run on Port 3000. Both applications are set to default port 3000, so run Rails Server first for the backend and run NPM Start or Yarn start on the frontend after. It will ask you if you like to run on another port then 3000 since its taken. Say yes. 
 
 
