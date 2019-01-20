@@ -1,4 +1,4 @@
-This is the frontend application for a hiking app that allows users to create an account, search for near by trails and save those trails to their account for later viewing.  In application uses React-Redux. In order for this application to run you will need the Redux broswer tool extention and you will need to create an .env file in the root directory of this application and add the following into it: 
+This is the frontend application for a hiking app that allows users to create an account, search for near by trails and save those trails to their account for later viewing.  In application uses React-Redux. In order for this application to run you will need the Redux browser devtool extention installed and you will need to create an .env file in the root directory of this application and add the following into it: 
 REACT_APP_GEOCODE_API_KEY = 'AIzaSyCCVVPW0b8_abXHKJ7yRv1VxxGkUKrlJ7I'
 REACT_APP_HIKING_API_KEY= '200404583-82771f36e7eba60bfd203a8f6b23d1fd'
 
