@@ -1,4 +1,14 @@
+This is the frontend application for a hiking app that allows users to create an account, search for near by trails and save those trails to their account for later viewing.  In application uses React-Redux. In order for this application to run you will need the Redux broswer tool extention and you will need to create an .env file in the root directory of this application and add the following into it: 
+REACT_APP_GEOCODE_API_KEY = 'AIzaSyCCVVPW0b8_abXHKJ7yRv1VxxGkUKrlJ7I'
+REACT_APP_HIKING_API_KEY= '200404583-82771f36e7eba60bfd203a8f6b23d1fd'
+
+This is typically incorrect to post these keys like this but in order for this application to be viewed I have made this exception. 
+
+You will also need to download and run the backend for this application found here:
 backend: https://github.com/DCW0830/trailsbackend
+
+The backend needs to run on Port 3000. Both applications are set to default port 3000, so run Rails Server first for the backend and run NPM Start or Yarn start on the frontend after. It will ask you if you like to run on another port then 3000 since its taken. Say yes. 
+
 
 This project was bootstrapped with [Create React App](https://com/facebook/create-react-app).
 
