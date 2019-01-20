@@ -6,7 +6,8 @@ import { logIn } from '../actions/users'
 class Login extends Component {
   state = {
     username: '',
-    pw: ''
+    pw: '',
+    click: false
   }
 
   handleChange = (event) => {
@@ -44,8 +45,11 @@ class Login extends Component {
              value={this.state.pw}
              name='pw'
              onChange={this.handleChange}
-             type="text"
+             type={this.state.click? "text": 'Password'}
             />
+            <span onClick={()=> this.setState({click: !this.state.click }) }>
+              {this.state.click? ' Hide?' : ' Show?'}
+            </span>
             <br/>
             <button>Sign In!</button>
 
