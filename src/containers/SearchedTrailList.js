@@ -1,9 +1,9 @@
-
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import Trail from '../components/Trail'
 import {addFavorite, deleteFavorite} from '../actions/users'
 import {trailMap} from'../actions/trails'
+const pa = 20
 
 class SearchedTrailList extends Component {
   state = {
@@ -14,9 +14,9 @@ class SearchedTrailList extends Component {
   handleNext = (event) => {
     event.preventDefault()
 
-    if(this.state.trailsCounter + 20 <= this.props.trails.trails.length)
+    if(this.state.trailsCounter + pa <= this.props.trails.trails.length)
     this.setState({
-      trailsCounter: this.state.trailsCounter + 20, pageTurn: this.state.pageTurn + 1
+      trailsCounter: this.state.trailsCounter + pa, pageTurn: this.state.pageTurn + 1
     })
   }
 
@@ -24,36 +24,32 @@ class SearchedTrailList extends Component {
     event.preventDefault()
     if (this.state.trailsCounter !== 0) {
       this.setState({
-        trailsCounter: this.state.trailsCounter - 20, pageTurn: this.state.pageTurn - 1
+        trailsCounter: this.state.trailsCounter - pa, pageTurn: this.state.pageTurn - 1
       })
     }
   }
 
   resultsCount = () => {
     let currentNumber
-    let number = this.props.trails.trails.length / 20
+    let number = this.props.trails.trails.length / pa
     if (this.state.pageTurn <= number) {
-      currentNumber = this.state.pageTurn * 20
+      currentNumber = this.state.pageTurn * pa
     } else {
-      currentNumber = number * 20
+      currentNumber = number * pa
     }
     return currentNumber
-  }
-
-  userTrailId(trailObj, userTrails) {
-    return userTrails.find(ut => ut.trail_number === trailObj.id)
   }
 
   createTrail = () => {
     if (this.props.trails.trails) {
       return this.props.trails.trails.map((trailObj, idx) => {
 
-        if (idx >= this.state.trailsCounter && idx < this.state.trailsCounter + 20) {
+        if (idx >= this.state.trailsCounter && idx < this.state.trailsCounter + pa) {
           return <Trail
             addFavorite={this.props.addFavorite}
             deleteFavorite={this.props.deleteFavorite}
             trailMap={this.props.trailMap}
-            userTrailId={this.userTrailId(trailObj, this.props.userTrails)}
+            userTrailId={this.props.userTrails.find(ut => ut.trail_number === trailObj.id)}
             key={trailObj.id}
             trail={trailObj}/>
         } else {
@@ -74,7 +70,6 @@ class SearchedTrailList extends Component {
         {zipCode? ` ${zipCode.long_name}`: null}
         {county? ` ${county.long_name}`: null}
         {trails.trails? <h1>Showing: {this.resultsCount()} of {trails.trails.length} Results</h1>: null}
-
         <form>
           <table className="trail-list" >
             <tbody>
@@ -89,8 +84,8 @@ class SearchedTrailList extends Component {
             </tbody>
           </table>
           <p>
-            {trails.trails.length > 20? <button onClick={this.handlePrevious}>Previous Page</button>:null}
-            {trails.trails.length > 20? <button onClick={this.handleNext}>Next Page</button>:null}
+            {trails.trails.length > pa? <button onClick={this.handlePrevious}>Previous Page</button>:null}
+            {trails.trails.length > pa? <button onClick={this.handleNext}>Next Page</button>:null}
           </p>
         </form>
       </div>
@@ -103,7 +98,6 @@ const mapStateToProps = (state => {
     trails: state.trailsReducers.trails,
     userTrails: state.usersReducers.userTrails,
     location: state.trailsReducers.location,
-
   })
 })
 
