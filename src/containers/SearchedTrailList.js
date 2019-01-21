@@ -40,6 +40,10 @@ class SearchedTrailList extends Component {
     return currentNumber
   }
 
+  userTrailId(trailObj, userTrails) {
+    return userTrails.find(ut => ut.trail_number === trailObj.id)
+  }
+
   createTrail = () => {
     if (this.props.trails.trails) {
       return this.props.trails.trails.map((trailObj, idx) => {
@@ -49,9 +53,9 @@ class SearchedTrailList extends Component {
             addFavorite={this.props.addFavorite}
             deleteFavorite={this.props.deleteFavorite}
             trailMap={this.props.trailMap}
+            userTrailId={this.userTrailId(trailObj, this.props.userTrails)}
             key={trailObj.id}
-            trail={trailObj}
-            userTrails={this.props.userTrails}/>
+            trail={trailObj}/>
         } else {
           return null
         }

@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 class Trail extends Component{
 
   state = {
-    click: false
+    click: !!this.props.userTrailId
   }
 
   handleClick = (event, trailNumber) => {
@@ -11,16 +11,7 @@ class Trail extends Component{
       this.props.addFavorite(trailNumber)
       this.setState({ click: !this.state.click})
     } else {
-
-      let foundTrail
-      this.props.userTrails.forEach(userTrailObj => {
-        if(userTrailObj.trail_number === trailNumber){
-         foundTrail = userTrailObj
-        } else {
-          return null
-        }
-      })
-      this.props.deleteFavorite(foundTrail.id)
+      this.props.deleteFavorite(this.props.userTrailId.id)
       this.setState({ click: !this.state.click})
     }
   }

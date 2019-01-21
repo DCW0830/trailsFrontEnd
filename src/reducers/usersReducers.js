@@ -76,7 +76,6 @@ export default (
      return {...state, loading: true, userTrailsString: toString, userTrails: newUserTrails}
 
      case 'FETCH_USER_TRAILS':
-     console.log(action.payload.trails)
      return {...state, error: false, loading: false,
       fetchedUserTrails: action.payload.trails}
 
