@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import UserTrail from './UserTrail'
-
+import UserTrail from '../containers/UserTrail'
 class UserTrailList extends Component {
   userTrailId(trailObj, userTrails) {
     return userTrails.find(ut => ut.trail_number === trailObj.id)
@@ -15,7 +14,6 @@ class UserTrailList extends Component {
       })
     }
   }
-
   render() {
     return (
       <form>
@@ -35,5 +33,4 @@ class UserTrailList extends Component {
     );
   }
 }
-
 export default UserTrailList

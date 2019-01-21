@@ -5,6 +5,7 @@ export default (
     location: {},
     latLon: {},
     trails: [],
+    fetchUserTrails: [],
     trailNumber: ''
   }, action) => {
 
@@ -43,11 +44,21 @@ export default (
 
     case 'CLEAR_STATE' :
     return {
+      fetchedUserTrails: [],
       error: null,
       loading: false,
       location: {},
       latLon: {},
       trails: []
+    }
+
+    case 'FETCH_USER_TRAILS':
+    return {
+      ...state,
+      error: false,
+      loading: false,
+      fetchedUserTrails: action.payload.trails,
+      trailNumber: action.payload.trails[0].id
     }
 
     case 'TRAIL_MAP':

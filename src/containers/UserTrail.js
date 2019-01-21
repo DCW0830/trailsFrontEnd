@@ -11,8 +11,8 @@ class Trail extends Component{
       <tr onClick={()=> this.props.trailMap(id)} >
         <td>{name}</td>
         <td>{difficulty}</td>
-        <td>{length}</td>
-        <td>{location}</td>
+        <td><center>{length}</center></td>
+        <td><center>{location}</center></td>
         <td onClick={()=>this.props.deleteFavorite(this.props.userTrailId.id)}>
           <center>X</center>
         </td>

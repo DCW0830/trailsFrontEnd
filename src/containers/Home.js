@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import NavBar from '../components/NavBar'
-import UserTrailList from './UserTrailList'
+import UserTrailList from '../components/UserTrailList'
 import SelectedTrailMap from '../components/SelectedTrailMap'
 import {connect} from 'react-redux'
 import {fetchUserTrails} from '../actions/trails'
@@ -35,7 +35,7 @@ const mapStateToProps = (state => {
     loading: state.usersReducers.loading,
     currentUser: state.usersReducers.currentUser,
     userTrailsString: state.usersReducers.userTrailsString,
-    fetchedUserTrails: state.usersReducers.fetchedUserTrails,
+    fetchedUserTrails: state.trailsReducers.fetchedUserTrails,
     userTrails: state.usersReducers.userTrails
   })
 })

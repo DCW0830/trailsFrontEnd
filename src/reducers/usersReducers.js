@@ -2,7 +2,6 @@ export default (
   state = {
     currentUser: {},
     userTrails: [],
-    fetchedUserTrails: [],
     userTrailsString: '',
     loading: false,
     error: false
@@ -31,7 +30,6 @@ export default (
 
     case 'CLEAR_STATE':
     return {
-      fetchUserTrails: [],
       currentUser: {},
       userTrailsString: '',
       userTrails:[],
@@ -60,24 +58,20 @@ export default (
            trail_number: action.payload.trail_number
          }
        ]
-     }
+    }
 
-     case 'DELETE_FAVORITE':
+    case 'DELETE_FAVORITE':
 
-     let newUserTrails = state.userTrails.filter(trail => {
-       return trail.trail_number !== action.payload.trail_number
-     })
-     let toArray =  newUserTrails.map(trail => {
-         return trail.trail_number
-       })
-     let toUnique = [...new Set(toArray)];
-     let toString = toUnique.join(',')
+    let newUserTrails = state.userTrails.filter(trail => {
+      return trail.trail_number !== action.payload.trail_number
+    })
+    let toArray =  newUserTrails.map(trail => {
+      return trail.trail_number
+    })
+    let toUnique = [...new Set(toArray)];
+    let toString = toUnique.join(',')
 
-     return {...state, loading: true, userTrailsString: toString, userTrails: newUserTrails}
-
-     case 'FETCH_USER_TRAILS':
-     return {...state, error: false, loading: false,
-      fetchedUserTrails: action.payload.trails}
+    return {...state, loading: true, userTrailsString: toString, userTrails: newUserTrails}
 
     default:
     return state;
