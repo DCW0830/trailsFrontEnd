@@ -26,14 +26,12 @@ export function getTrails(search) {
 }
 
 export function fetchUserTrails(string) {
-  console.log('fetching trails')
   return (dispatch) => {
     if(string) {
       fetch(`${url.trailApiById}&ids=${string}`)
       .then(res => res.json())
       .then(userTrails =>  {
         dispatch({type: 'FETCH_USER_TRAILS', payload: userTrails})
-        console.log(userTrails)
       })
       .catch(error => {
         dispatch({type: 'FETCH_ERROR', payload: error})

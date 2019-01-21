@@ -2,10 +2,16 @@ import React, {Component} from 'react';
 import UserTrail from './UserTrail'
 
 class UserTrailList extends Component {
+  userTrailId(trailObj, userTrails) {
+    return userTrails.find(ut => ut.trail_number === trailObj.id)
+  }
   createTrail = () => {
-    if(this.props.userTrails) {
-      return this.props.userTrails.map(trailObj => {
-        return <UserTrail key={trailObj.id} trail={trailObj}/>
+    if(this.props.userFetchedTrails) {
+      return this.props.userFetchedTrails.map(trailObj => {
+        return <UserTrail
+          key={trailObj.id}
+          trail={trailObj}
+          userTrailId={this.userTrailId(trailObj, this.props.userTrails)}/>
       })
     }
   }

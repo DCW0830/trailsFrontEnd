@@ -7,7 +7,8 @@ class SignUp extends Component {
   state = {
     username: '',
     pw: '',
-    pwConfirmation: ''
+    pwConfirmation: '',
+    click: false
   }
 
   handleChange = (event) => {
@@ -45,15 +46,19 @@ class SignUp extends Component {
              value={this.state.pw}
              name='pw'
              onChange={this.handleChange}
-             type="text"
+             type={this.state.click? "text": 'Password'}
             />
+            <span onClick={()=> this.setState({click: !this.state.click }) }>
+              {this.state.click? ' Hide?' : ' Show?'}
+            </span>
             <br/>
             <label>Password Confirmation:</label>
             <input
               value={this.state.pwConfirmation}
               name='pwConfirmation'
-              onChange={this.handleChange} type="text"
+              onChange={this.handleChange} type={this.state.click? "text": 'Password'}
             />
+
             <br/>
             <button>Create Account!</button>
           </form>
