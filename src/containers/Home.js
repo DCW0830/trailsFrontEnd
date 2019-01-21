@@ -9,8 +9,8 @@ class Home extends Component {
 
   render() {
     const { username } = this.props.currentUser
-    const {userTrailsString, fetchedUserTrails, loading} =this.props
-    
+    const {userTrailsString, fetchedUserTrails, loading, userTrails} =this.props
+
     return (
       <div>
         <div>
@@ -19,7 +19,7 @@ class Home extends Component {
         <h1>Welcome to Base Camp: {username}!</h1>
         {loading? this.props.fetchUserTrails(userTrailsString) : null}
         <div>
-          {userTrailsString? <UserTrailList userTrails={fetchedUserTrails}/> : <h2>You Currently Have No Favorite Trails. Go Find Some!</h2>}
+          {userTrailsString? <UserTrailList userTrails={userTrails} userFetchedTrails={fetchedUserTrails}/> : <h2>You Currently Have No Favorite Trails. Go Find Some!</h2>}
         </div>
         <div>
           {userTrailsString? <SelectedTrailMap/> : null}
@@ -35,7 +35,8 @@ const mapStateToProps = (state => {
     loading: state.usersReducers.loading,
     currentUser: state.usersReducers.currentUser,
     userTrailsString: state.usersReducers.userTrailsString,
-    fetchedUserTrails: state.usersReducers.fetchedUserTrails
+    fetchedUserTrails: state.usersReducers.fetchedUserTrails,
+    userTrails: state.usersReducers.userTrails
   })
 })
 
