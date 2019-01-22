@@ -78,15 +78,15 @@ export default (
     case 'FETCH_USER_TRAILS':
     let userConvertedDiff = action.payload.trails.map(mapObj => {
       if(mapObj.difficulty === 'green') {
-        return {...mapObj, difficulty: 'Easy'}
+        return {...mapObj, difficulty: 'Easy', rank: 1}
       } else if (mapObj.difficulty ==='greenBlue') {
-        return {...mapObj, difficulty: 'Moderatly Easy'}
+        return {...mapObj, difficulty: 'Moderatly Easy', rank: 2}
       } else if (mapObj.difficulty ==='blue') {
-        return {...mapObj, difficulty: 'Moderate'}
+        return {...mapObj, difficulty: 'Moderate', rank: 3}
       } else if (mapObj.difficulty ==='blueBlack') {
-        return {...mapObj, difficulty: 'Moderatly Hard '}
+        return {...mapObj, difficulty: 'Moderatly Hard ', rank: 4}
       } else if (mapObj.difficulty ==='black') {
-        return {...mapObj, difficulty: 'Hard'}
+        return {...mapObj, difficulty: 'Hard', rank: 5}
       } else {
         return mapObj
       }
@@ -113,8 +113,8 @@ export default (
         aToBeSorted = a.name
         bToBeSorted = b.name
       } else if(action.payload.header ==='Difficulty') {
-        aToBeSorted = a.difficulty
-        bToBeSorted = b.difficulty
+        aToBeSorted = b.rank
+        bToBeSorted = a.rank
       } else if(action.payload.header ==='Length') {
         aToBeSorted = a.length
         bToBeSorted = b.length
