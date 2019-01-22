@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import NavBar from '../components/NavBar'
-import UserTrailList from './UserTrailList'
-import SelectedTrailMap from '../components/SelectedTrailMap'
+import UserTrailList from '../components/UserTrailList'
+import UserTrailMap from '../components/UserTrailMap'
 import {connect} from 'react-redux'
 import {fetchUserTrails} from '../actions/trails'
 
@@ -9,7 +9,7 @@ class Home extends Component {
 
   render() {
     const { username } = this.props.currentUser
-    const {userTrailsString, fetchedUserTrails, loading, userTrails} =this.props
+    const {userTrailsString, fetchedUserTrails, loading, userTrails} = this.props
 
     return (
       <div>
@@ -22,7 +22,7 @@ class Home extends Component {
           {userTrailsString? <UserTrailList userTrails={userTrails} userFetchedTrails={fetchedUserTrails}/> : <h2>You Currently Have No Favorite Trails. Go Find Some!</h2>}
         </div>
         <div>
-          {userTrailsString? <SelectedTrailMap/> : null}
+          {userTrailsString? <UserTrailMap/> : null}
         </div>
       </div>
 

@@ -1,22 +1,22 @@
-
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import Trail from '../components/Trail'
 import {addFavorite, deleteFavorite} from '../actions/users'
-import {trailMap} from'../actions/trails'
+import {trailMap, trailSort} from'../actions/trails'
+const pa = 20
 
 class SearchedTrailList extends Component {
   state = {
     trailsCounter: 0,
-    pageTurn: 1
+    pageTurn: 1,
+    click: false
   }
 
   handleNext = (event) => {
     event.preventDefault()
-
-    if(this.state.trailsCounter + 20 <= this.props.trails.trails.length)
+    if(this.state.trailsCounter + pa <= this.props.trails.trails.length)
     this.setState({
-      trailsCounter: this.state.trailsCounter + 20, pageTurn: this.state.pageTurn + 1
+      trailsCounter: this.state.trailsCounter + pa, pageTurn: this.state.pageTurn + 1
     })
   }
 
@@ -24,36 +24,39 @@ class SearchedTrailList extends Component {
     event.preventDefault()
     if (this.state.trailsCounter !== 0) {
       this.setState({
-        trailsCounter: this.state.trailsCounter - 20, pageTurn: this.state.pageTurn - 1
+        trailsCounter: this.state.trailsCounter - pa, pageTurn: this.state.pageTurn - 1
       })
     }
   }
 
-  resultsCount = () => {
-    let currentNumber
-    let number = this.props.trails.trails.length / 20
-    if (this.state.pageTurn <= number) {
-      currentNumber = this.state.pageTurn * 20
-    } else {
-      currentNumber = number * 20
-    }
-    return currentNumber
+  handleClick = (event) => {
+    this.setState({
+      click: !this.state.click
+    })
+    this.props.trailSort(event.target.innerText, this.state.click)
   }
 
-  userTrailId(trailObj, userTrails) {
-    return userTrails.find(ut => ut.trail_number === trailObj.id)
+  resultsCount = () => {
+    let currentNumber
+    let number = this.props.trails.trails.length / pa
+    if (this.state.pageTurn <= number) {
+      currentNumber = this.state.pageTurn * pa
+    } else {
+      currentNumber = number * pa
+    }
+    return currentNumber
   }
 
   createTrail = () => {
     if (this.props.trails.trails) {
       return this.props.trails.trails.map((trailObj, idx) => {
 
-        if (idx >= this.state.trailsCounter && idx < this.state.trailsCounter + 20) {
+        if (idx >= this.state.trailsCounter && idx < this.state.trailsCounter + pa) {
           return <Trail
             addFavorite={this.props.addFavorite}
             deleteFavorite={this.props.deleteFavorite}
             trailMap={this.props.trailMap}
-            userTrailId={this.userTrailId(trailObj, this.props.userTrails)}
+            userTrailId={this.props.userTrails.find(ut => ut.trail_number === trailObj.id)}
             key={trailObj.id}
             trail={trailObj}/>
         } else {
@@ -74,23 +77,22 @@ class SearchedTrailList extends Component {
         {zipCode? ` ${zipCode.long_name}`: null}
         {county? ` ${county.long_name}`: null}
         {trails.trails? <h1>Showing: {this.resultsCount()} of {trails.trails.length} Results</h1>: null}
-
         <form>
           <table className="trail-list" >
             <tbody>
               <tr>
-                <th onClick={()=>console.log('hello')}>Name</th>
-                <th>Difficulty</th>
-                <th>Length</th>
-                <th>Location</th>
+                <th onClick={this.handleClick}>Name</th>
+                <th onClick={this.handleClick}>Difficulty</th>
+                <th onClick={this.handleClick}>Length</th>
+                <th onClick={this.handleClick}>Location</th>
                 <th>Favorite</th>
               </tr>
               {this.createTrail()}
             </tbody>
           </table>
           <p>
-            {trails.trails.length > 20? <button onClick={this.handlePrevious}>Previous Page</button>:null}
-            {trails.trails.length > 20? <button onClick={this.handleNext}>Next Page</button>:null}
+            {trails.trails.length > pa? <button onClick={this.handlePrevious}>Previous Page</button>:null}
+            {trails.trails.length > pa? <button onClick={this.handleNext}>Next Page</button>:null}
           </p>
         </form>
       </div>
@@ -103,8 +105,7 @@ const mapStateToProps = (state => {
     trails: state.trailsReducers.trails,
     userTrails: state.usersReducers.userTrails,
     location: state.trailsReducers.location,
-
   })
 })
 
-export default connect(mapStateToProps, {addFavorite, deleteFavorite, trailMap})(SearchedTrailList)
+export default connect(mapStateToProps, {trailSort, addFavorite, deleteFavorite, trailMap})(SearchedTrailList)

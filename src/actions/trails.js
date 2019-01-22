@@ -42,8 +42,22 @@ export function fetchUserTrails(string) {
   }
 }
 
-export function trailMap (trailNumber) {
+export function trailMap (trailNumber, trailId) {
   return (dispatch) => {
-    dispatch({type: 'TRAIL_MAP', payload: trailNumber})
+    if(trailId) {
+      dispatch({type: 'USER_TRAIL_MAP', payload: trailNumber})
+    } else {
+      dispatch({type: 'TRAIL_MAP', payload: trailNumber})
+    }
+  }
+}
+
+export function trailSort (header, click, userList) {
+  return dispatch => {
+    if(userList) {
+      dispatch({type: 'USER_TRAIL_SORT', payload: {header, click} })
+    } else {
+      dispatch({type: 'TRAIL_SORT', payload: {header, click} })
+    }
   }
 }
