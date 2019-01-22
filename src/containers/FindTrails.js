@@ -21,10 +21,10 @@ class FindTrails extends Component {
           {error? <h2>Error: Did you Enter a Valid City, State or Zip Code?</h2>: null}
         </div>
         <div>
-          {trails.trails? <SearchedTrailList /> : null}
+          {trails[0]? <SearchedTrailList /> : null}
         </div>
         <div>
-          {trails.trails? <SelectedTrailMap/> : null}
+          {trails[0]? <SelectedTrailMap/> : null}
         </div>
       </div>
     );

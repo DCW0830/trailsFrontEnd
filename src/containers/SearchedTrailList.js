@@ -14,7 +14,7 @@ class SearchedTrailList extends Component {
 
   handleNext = (event) => {
     event.preventDefault()
-    if(this.state.trailsCounter + pa <= this.props.trails.trails.length)
+    if(this.state.trailsCounter + pa <= this.props.trails.length)
     this.setState({
       trailsCounter: this.state.trailsCounter + pa, pageTurn: this.state.pageTurn + 1
     })
@@ -38,7 +38,7 @@ class SearchedTrailList extends Component {
 
   resultsCount = () => {
     let currentNumber
-    let number = this.props.trails.trails.length / pa
+    let number = this.props.trails.length / pa
     if (this.state.pageTurn <= number) {
       currentNumber = this.state.pageTurn * pa
     } else {
@@ -48,8 +48,8 @@ class SearchedTrailList extends Component {
   }
 
   createTrail = () => {
-    if (this.props.trails.trails) {
-      return this.props.trails.trails.map((trailObj, idx) => {
+    if (this.props.trails[0]) {
+      return this.props.trails.map((trailObj, idx) => {
 
         if (idx >= this.state.trailsCounter && idx < this.state.trailsCounter + pa) {
           return <Trail
@@ -69,6 +69,7 @@ class SearchedTrailList extends Component {
   render() {
     const { city, state, county, zipCode} =this.props.location
     const {trails} = this.props
+
     return (
       <div>
         <br/>
@@ -76,7 +77,7 @@ class SearchedTrailList extends Component {
         {state? ` ${state.long_name}`: null}
         {zipCode? ` ${zipCode.long_name}`: null}
         {county? ` ${county.long_name}`: null}
-        {trails.trails? <h1>Showing: {this.resultsCount()} of {trails.trails.length} Results</h1>: null}
+        {trails[0]? <h1>Showing: {this.resultsCount()} of {trails.length} Results</h1>: null}
         <form>
           <table className="trail-list" >
             <tbody>
@@ -91,8 +92,8 @@ class SearchedTrailList extends Component {
             </tbody>
           </table>
           <p>
-            {trails.trails.length > pa? <button onClick={this.handlePrevious}>Previous Page</button>:null}
-            {trails.trails.length > pa? <button onClick={this.handleNext}>Next Page</button>:null}
+            {trails.length > pa? <button onClick={this.handlePrevious}>Previous Page</button>:null}
+            {trails.length > pa? <button onClick={this.handleNext}>Next Page</button>:null}
           </p>
         </form>
       </div>

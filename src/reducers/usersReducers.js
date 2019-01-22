@@ -76,11 +76,27 @@ export default (
     return {...state, loading: true, userTrailsString: toString, userTrails: newUserTrails}
 
     case 'FETCH_USER_TRAILS':
+    let userConvertedDiff = action.payload.trails.map(mapObj => {
+      if(mapObj.difficulty === 'green') {
+        return {...mapObj, difficulty: 'Easy'}
+      } else if (mapObj.difficulty ==='greenBlue') {
+        return {...mapObj, difficulty: 'Moderatly Easy'}
+      } else if (mapObj.difficulty ==='blue') {
+        return {...mapObj, difficulty: 'Moderate'}
+      } else if (mapObj.difficulty ==='blueBlack') {
+        return {...mapObj, difficulty: 'Moderatly Hard '}
+      } else if (mapObj.difficulty ==='black') {
+        return {...mapObj, difficulty: 'Hard'}
+      } else {
+        return mapObj
+      }
+    })
+
     return {
       ...state,
       error: false,
       loading: false,
-      fetchedUserTrails: action.payload.trails,
+      fetchedUserTrails: userConvertedDiff,
       trailNumber: action.payload.trails[0].id
     }
 
@@ -88,7 +104,7 @@ export default (
     return{...state, loading: false, trailNumber: action.payload}
 
     case 'USER_TRAIL_SORT':
-    
+
     state.fetchedUserTrails.sort(function(a, b){
       let aToBeSorted
       let bToBeSorted
