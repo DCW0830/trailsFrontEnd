@@ -26,6 +26,7 @@ export function getTrails(search) {
 }
 
 export function fetchUserTrails(string) {
+  console.log('fetching user trails')
   return (dispatch) => {
     if(string) {
       fetch(`${url.trailApiById}&ids=${string}`)
@@ -45,5 +46,12 @@ export function fetchUserTrails(string) {
 export function trailMap (trailNumber) {
   return (dispatch) => {
     dispatch({type: 'TRAIL_MAP', payload: trailNumber})
+  }
+}
+
+export function abcSort (event) {
+  console.log(event.target.innerText)
+  return dispatch => {
+    dispatch({type: 'ABC_SORT', payload: event.target.innerText})
   }
 }

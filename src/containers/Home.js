@@ -9,7 +9,8 @@ class Home extends Component {
 
   render() {
     const { username } = this.props.currentUser
-    const {userTrailsString, fetchedUserTrails, loading, userTrails} =this.props
+    const {userTrailsString, fetchedUserTrails, loading, userTrails} = this.props
+    console.log(username)
 
     return (
       <div>
@@ -35,7 +36,7 @@ const mapStateToProps = (state => {
     loading: state.usersReducers.loading,
     currentUser: state.usersReducers.currentUser,
     userTrailsString: state.usersReducers.userTrailsString,
-    fetchedUserTrails: state.trailsReducers.fetchedUserTrails,
+    fetchedUserTrails: state.usersReducers.fetchedUserTrails,
     userTrails: state.usersReducers.userTrails
   })
 })

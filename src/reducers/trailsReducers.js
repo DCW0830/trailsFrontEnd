@@ -1,15 +1,14 @@
 export default (
   state = {
     error: null,
-    loading: false,
+    loading: true,
     location: {},
     latLon: {},
     trails: [],
-    fetchUserTrails: [],
     trailNumber: ''
   }, action) => {
-
   switch (action.type) {
+
     case'LOADING_GEOCODE':
     return {...state, error: false, loading: true}
 
@@ -31,6 +30,7 @@ export default (
     return {...state, error: false, loading: true}
 
     case 'FETCH_TRAILS':
+    console.log(action.payload.trails)
     return {
       ...state,
       error: false,
@@ -50,15 +50,6 @@ export default (
       location: {},
       latLon: {},
       trails: []
-    }
-
-    case 'FETCH_USER_TRAILS':
-    return {
-      ...state,
-      error: false,
-      loading: false,
-      fetchedUserTrails: action.payload.trails,
-      trailNumber: action.payload.trails[0].id
     }
 
     case 'TRAIL_MAP':

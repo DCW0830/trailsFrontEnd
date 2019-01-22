@@ -4,6 +4,7 @@ export default (
     userTrails: [],
     userTrailsString: '',
     loading: false,
+    fetchUserTrails: [],
     error: false
   }, action) => {
 
@@ -72,6 +73,15 @@ export default (
     let toString = toUnique.join(',')
 
     return {...state, loading: true, userTrailsString: toString, userTrails: newUserTrails}
+
+    case 'FETCH_USER_TRAILS':
+    return {
+      ...state,
+      error: false,
+      loading: false,
+      fetchedUserTrails: action.payload.trails,
+      trailNumber: action.payload.trails[0].id
+    }
 
     default:
     return state;

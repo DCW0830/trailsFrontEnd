@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import Trail from '../components/Trail'
 import {addFavorite, deleteFavorite} from '../actions/users'
-import {trailMap} from'../actions/trails'
+import {trailMap, abcSort} from'../actions/trails'
 const pa = 20
 
 class SearchedTrailList extends Component {
@@ -74,7 +74,7 @@ class SearchedTrailList extends Component {
           <table className="trail-list" >
             <tbody>
               <tr>
-                <th onClick={()=>console.log('hello')}>Name</th>
+                <th onClick={this.props.abcSort}>Name</th>
                 <th>Difficulty</th>
                 <th>Length</th>
                 <th>Location</th>
@@ -101,4 +101,4 @@ const mapStateToProps = (state => {
   })
 })
 
-export default connect(mapStateToProps, {addFavorite, deleteFavorite, trailMap})(SearchedTrailList)
+export default connect(mapStateToProps, {abcSort, addFavorite, deleteFavorite, trailMap})(SearchedTrailList)
