@@ -30,7 +30,6 @@ export default (
     return {...state, error: false, loading: true}
 
     case 'FETCH_TRAILS':
-    console.log(action.payload.trails)
     return {
       ...state,
       error: false,

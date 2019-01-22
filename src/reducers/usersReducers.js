@@ -5,7 +5,8 @@ export default (
     userTrailsString: '',
     loading: false,
     fetchUserTrails: [],
-    error: false
+    error: false,
+    trailNumber: ''
   }, action) => {
 
   switch (action.type) {
@@ -82,6 +83,9 @@ export default (
       fetchedUserTrails: action.payload.trails,
       trailNumber: action.payload.trails[0].id
     }
+
+    case 'USER_TRAIL_MAP':
+    return{...state, loading: false, trailNumber: action.payload}
 
     default:
     return state;

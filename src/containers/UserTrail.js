@@ -7,13 +7,14 @@ class Trail extends Component{
 
   render() {
     const {name, difficulty, length, location, id} = this.props.trail
+    const {userTrailId} = this.props
     return (
-      <tr onClick={()=> this.props.trailMap(id)} >
+      <tr onClick={()=> this.props.trailMap(id, userTrailId.id )} >
         <td>{name}</td>
         <td>{difficulty}</td>
         <td><center>{length}</center></td>
         <td><center>{location}</center></td>
-        <td onClick={()=>this.props.deleteFavorite(this.props.userTrailId.id)}>
+        <td onClick={()=>this.props.deleteFavorite(userTrailId.id)}>
           <center>X</center>
         </td>
       </tr>

@@ -26,7 +26,6 @@ export function getTrails(search) {
 }
 
 export function fetchUserTrails(string) {
-  console.log('fetching user trails')
   return (dispatch) => {
     if(string) {
       fetch(`${url.trailApiById}&ids=${string}`)
@@ -43,9 +42,13 @@ export function fetchUserTrails(string) {
   }
 }
 
-export function trailMap (trailNumber) {
+export function trailMap (trailNumber, trailId) {
   return (dispatch) => {
-    dispatch({type: 'TRAIL_MAP', payload: trailNumber})
+    if(trailId) {
+      dispatch({type: 'USER_TRAIL_MAP', payload: trailNumber})
+    } else {
+      dispatch({type: 'TRAIL_MAP', payload: trailNumber})
+    }
   }
 }
 
