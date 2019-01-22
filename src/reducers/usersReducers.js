@@ -4,7 +4,7 @@ export default (
     userTrails: [],
     userTrailsString: '',
     loading: false,
-    fetchUserTrails: [],
+    fetchedUserTrails: [],
     error: false,
     trailNumber: ''
   }, action) => {
@@ -86,6 +86,38 @@ export default (
 
     case 'USER_TRAIL_MAP':
     return{...state, loading: false, trailNumber: action.payload}
+
+    case 'USER_TRAIL_SORT':
+    
+    state.fetchedUserTrails.sort(function(a, b){
+      let aToBeSorted
+      let bToBeSorted
+
+      if(action.payload.header ==='Name') {
+        aToBeSorted = a.name
+        bToBeSorted = b.name
+      } else if(action.payload.header ==='Difficulty') {
+        aToBeSorted = a.difficulty
+        bToBeSorted = b.difficulty
+      } else if(action.payload.header ==='Length') {
+        aToBeSorted = a.length
+        bToBeSorted = b.length
+      } else if(action.payload.header ==='Location') {
+        aToBeSorted = a.location
+        bToBeSorted = b.location
+      }
+
+      if(action.payload.click) {
+        if(aToBeSorted < bToBeSorted) { return -1; }
+        if(aToBeSorted > bToBeSorted) { return 1; }
+        return 0;
+      }else{
+        if(aToBeSorted > bToBeSorted) { return -1; }
+        if(aToBeSorted < bToBeSorted) { return 1; }
+        return 0;
+      }
+    })
+    return state
 
     default:
     return state;

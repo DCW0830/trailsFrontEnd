@@ -2,18 +2,18 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import Trail from '../components/Trail'
 import {addFavorite, deleteFavorite} from '../actions/users'
-import {trailMap, abcSort} from'../actions/trails'
+import {trailMap, trailSort} from'../actions/trails'
 const pa = 20
 
 class SearchedTrailList extends Component {
   state = {
     trailsCounter: 0,
-    pageTurn: 1
+    pageTurn: 1,
+    click: false
   }
 
   handleNext = (event) => {
     event.preventDefault()
-
     if(this.state.trailsCounter + pa <= this.props.trails.trails.length)
     this.setState({
       trailsCounter: this.state.trailsCounter + pa, pageTurn: this.state.pageTurn + 1
@@ -27,6 +27,13 @@ class SearchedTrailList extends Component {
         trailsCounter: this.state.trailsCounter - pa, pageTurn: this.state.pageTurn - 1
       })
     }
+  }
+
+  handleClick = (event) => {
+    this.setState({
+      click: !this.state.click
+    })
+    this.props.trailSort(event.target.innerText, this.state.click)
   }
 
   resultsCount = () => {
@@ -74,10 +81,10 @@ class SearchedTrailList extends Component {
           <table className="trail-list" >
             <tbody>
               <tr>
-                <th onClick={this.props.abcSort}>Name</th>
-                <th>Difficulty</th>
-                <th>Length</th>
-                <th>Location</th>
+                <th onClick={this.handleClick}>Name</th>
+                <th onClick={this.handleClick}>Difficulty</th>
+                <th onClick={this.handleClick}>Length</th>
+                <th onClick={this.handleClick}>Location</th>
                 <th>Favorite</th>
               </tr>
               {this.createTrail()}
@@ -101,4 +108,4 @@ const mapStateToProps = (state => {
   })
 })
 
-export default connect(mapStateToProps, {abcSort, addFavorite, deleteFavorite, trailMap})(SearchedTrailList)
+export default connect(mapStateToProps, {trailSort, addFavorite, deleteFavorite, trailMap})(SearchedTrailList)

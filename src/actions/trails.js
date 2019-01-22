@@ -52,9 +52,12 @@ export function trailMap (trailNumber, trailId) {
   }
 }
 
-export function abcSort (event) {
-  console.log(event.target.innerText)
+export function trailSort (header, click, userList) {
   return dispatch => {
-    dispatch({type: 'ABC_SORT', payload: event.target.innerText})
+    if(userList) {
+      dispatch({type: 'USER_TRAIL_SORT', payload: {header, click} })
+    } else {
+      dispatch({type: 'TRAIL_SORT', payload: {header, click} })
+    }
   }
 }
