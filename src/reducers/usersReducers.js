@@ -63,7 +63,6 @@ export default (
     }
 
     case 'DELETE_FAVORITE':
-
     let newUserTrails = state.userTrails.filter(trail => {
       return trail.trail_number !== action.payload.trail_number
     })
@@ -76,11 +75,26 @@ export default (
     return {...state, loading: true, userTrailsString: toString, userTrails: newUserTrails}
 
     case 'FETCH_USER_TRAILS':
+    let userConvertedDiff = action.payload.trails.map(mapObj => {
+      if(mapObj.difficulty === 'green') {
+        return {...mapObj, difficulty: 'Easy', rank: 1}
+      } else if (mapObj.difficulty ==='greenBlue') {
+        return {...mapObj, difficulty: 'Moderatly Easy', rank: 2}
+      } else if (mapObj.difficulty ==='blue') {
+        return {...mapObj, difficulty: 'Moderate', rank: 3}
+      } else if (mapObj.difficulty ==='blueBlack') {
+        return {...mapObj, difficulty: 'Moderatly Hard ', rank: 4}
+      } else if (mapObj.difficulty ==='black') {
+        return {...mapObj, difficulty: 'Hard', rank: 5}
+      } else {
+        return mapObj
+      }
+    })
     return {
       ...state,
       error: false,
       loading: false,
-      fetchedUserTrails: action.payload.trails,
+      fetchedUserTrails: userConvertedDiff,
       trailNumber: action.payload.trails[0].id
     }
 
@@ -88,7 +102,7 @@ export default (
     return{...state, loading: false, trailNumber: action.payload}
 
     case 'USER_TRAIL_SORT':
-    
+
     state.fetchedUserTrails.sort(function(a, b){
       let aToBeSorted
       let bToBeSorted
@@ -97,8 +111,8 @@ export default (
         aToBeSorted = a.name
         bToBeSorted = b.name
       } else if(action.payload.header ==='Difficulty') {
-        aToBeSorted = a.difficulty
-        bToBeSorted = b.difficulty
+        aToBeSorted = b.rank
+        bToBeSorted = a.rank
       } else if(action.payload.header ==='Length') {
         aToBeSorted = a.length
         bToBeSorted = b.length

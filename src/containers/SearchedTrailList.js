@@ -14,7 +14,7 @@ class SearchedTrailList extends Component {
 
   handleNext = (event) => {
     event.preventDefault()
-    if(this.state.trailsCounter + pa <= this.props.trails.trails.length)
+    if(this.state.trailsCounter + pa <= this.props.trails.length)
     this.setState({
       trailsCounter: this.state.trailsCounter + pa, pageTurn: this.state.pageTurn + 1
     })
@@ -36,21 +36,25 @@ class SearchedTrailList extends Component {
     this.props.trailSort(event.target.innerText, this.state.click)
   }
 
-  resultsCount = () => {
-    let currentNumber
-    let number = this.props.trails.trails.length / pa
+  displayResults = () => {
+    let endNumber
+    let firstNumber
+    let number = this.props.trails.length / pa
+    let difference = this.props.trails.length % 20
+
     if (this.state.pageTurn <= number) {
-      currentNumber = this.state.pageTurn * pa
+      endNumber = this.state.pageTurn * pa
+      firstNumber = endNumber - pa + 1
     } else {
-      currentNumber = number * pa
+      endNumber = number * pa
+      firstNumber = endNumber - difference + 1
     }
-    return currentNumber
+    return <h1>Showing: {firstNumber} - {endNumber} of total {this.props.trails.length} Results</h1>
   }
 
   createTrail = () => {
-    if (this.props.trails.trails) {
-      return this.props.trails.trails.map((trailObj, idx) => {
-
+    if (this.props.trails[0]) {
+      return this.props.trails.map((trailObj, idx) => {
         if (idx >= this.state.trailsCounter && idx < this.state.trailsCounter + pa) {
           return <Trail
             addFavorite={this.props.addFavorite}
@@ -76,7 +80,7 @@ class SearchedTrailList extends Component {
         {state? ` ${state.long_name}`: null}
         {zipCode? ` ${zipCode.long_name}`: null}
         {county? ` ${county.long_name}`: null}
-        {trails.trails? <h1>Showing: {this.resultsCount()} of {trails.trails.length} Results</h1>: null}
+        {trails[0]? this.displayResults(): null}
         <form>
           <table className="trail-list" >
             <tbody>
@@ -91,8 +95,8 @@ class SearchedTrailList extends Component {
             </tbody>
           </table>
           <p>
-            {trails.trails.length > pa? <button onClick={this.handlePrevious}>Previous Page</button>:null}
-            {trails.trails.length > pa? <button onClick={this.handleNext}>Next Page</button>:null}
+            {trails.length > pa? <button onClick={this.handlePrevious}>Previous Page</button>:null}
+            {trails.length > pa? <button onClick={this.handleNext}>Next Page</button>:null}
           </p>
         </form>
       </div>
@@ -103,6 +107,7 @@ class SearchedTrailList extends Component {
 const mapStateToProps = (state => {
   return ({
     trails: state.trailsReducers.trails,
+    noTrails: state.trailsReducers.noTrails,
     userTrails: state.usersReducers.userTrails,
     location: state.trailsReducers.location,
   })

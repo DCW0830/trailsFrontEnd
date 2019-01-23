@@ -1,7 +1,7 @@
 export default (
   state = {
     error: null,
-    loading: true,
+    loading: false,
     location: {},
     latLon: {},
     trails: [],
@@ -30,11 +30,27 @@ export default (
     return {...state, error: false, loading: true}
 
     case 'FETCH_TRAILS':
+
+    let convertedDiff = action.payload.trails.map(mapObj => {
+      if(mapObj.difficulty === 'green') {
+        return {...mapObj, difficulty: 'Easy', rank: 1}
+      } else if (mapObj.difficulty ==='greenBlue') {
+        return {...mapObj, difficulty: 'Moderatly Easy', rank: 2}
+      } else if (mapObj.difficulty ==='blue') {
+        return {...mapObj, difficulty: 'Moderate', rank: 3}
+      } else if (mapObj.difficulty ==='blueBlack') {
+        return {...mapObj, difficulty: 'Moderatly Hard ', rank: 4}
+      } else if (mapObj.difficulty ==='black') {
+        return {...mapObj, difficulty: 'Hard', rank: 5}
+      } else {
+        return mapObj
+      }
+    })
     return {
       ...state,
       error: false,
       loading: false,
-      trails: action.payload,
+      trails: convertedDiff,
       trailNumber: action.payload.trails[0].id
     }
 
@@ -56,7 +72,7 @@ export default (
 
     case 'TRAIL_SORT':
 
-    state.trails.trails.sort(function(a, b){
+    state.trails.sort(function(a, b){
       let aToBeSorted
       let bToBeSorted
 
@@ -64,8 +80,8 @@ export default (
         aToBeSorted = a.name
         bToBeSorted = b.name
       } else if(action.payload.header ==='Difficulty') {
-        aToBeSorted = a.difficulty
-        bToBeSorted = b.difficulty
+        aToBeSorted = b.rank
+        bToBeSorted = a.rank
       } else if(action.payload.header ==='Length') {
         aToBeSorted = a.length
         bToBeSorted = b.length
