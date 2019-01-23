@@ -1,6 +1,6 @@
 import url from '../urls'
 
-export function getTrails(search) {
+export function getTrails(search, radius) {
   return (dispatch) => {
     dispatch({type: 'LOADING_GEOCODE'})
     fetch(`${url.geocodeAPI}&address=${search}`)
@@ -10,7 +10,7 @@ export function getTrails(search) {
 
       let lat = geocode.results[0].geometry.location.lat
       let lng = geocode.results[0].geometry.location.lng
-      const trailsAPI = `${url.trailAPI}&lat=${lat}&lon=${lng}`
+      const trailsAPI = `${url.trailAPI}&lat=${lat}&lon=${lng}&maxDistance=${radius}`
 
       dispatch({type: 'LOADING_TRAILS'})
       fetch(trailsAPI)

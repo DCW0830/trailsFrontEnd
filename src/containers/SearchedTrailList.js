@@ -36,21 +36,25 @@ class SearchedTrailList extends Component {
     this.props.trailSort(event.target.innerText, this.state.click)
   }
 
-  resultsCount = () => {
-    let currentNumber
+  displayResults = () => {
+    let endNumber
+    let firstNumber
     let number = this.props.trails.length / pa
+    let difference = this.props.trails.length % 20
+
     if (this.state.pageTurn <= number) {
-      currentNumber = this.state.pageTurn * pa
+      endNumber = this.state.pageTurn * pa
+      firstNumber = endNumber - pa + 1
     } else {
-      currentNumber = number * pa
+      endNumber = number * pa
+      firstNumber = endNumber - difference + 1
     }
-    return currentNumber
+    return <h1>Showing: {firstNumber} - {endNumber} of total {this.props.trails.length} Results</h1>
   }
 
   createTrail = () => {
     if (this.props.trails[0]) {
       return this.props.trails.map((trailObj, idx) => {
-
         if (idx >= this.state.trailsCounter && idx < this.state.trailsCounter + pa) {
           return <Trail
             addFavorite={this.props.addFavorite}
@@ -69,7 +73,6 @@ class SearchedTrailList extends Component {
   render() {
     const { city, state, county, zipCode} =this.props.location
     const {trails} = this.props
-
     return (
       <div>
         <br/>
@@ -77,7 +80,7 @@ class SearchedTrailList extends Component {
         {state? ` ${state.long_name}`: null}
         {zipCode? ` ${zipCode.long_name}`: null}
         {county? ` ${county.long_name}`: null}
-        {trails[0]? <h1>Showing: {this.resultsCount()} of {trails.length} Results</h1>: null}
+        {trails[0]? this.displayResults(): null}
         <form>
           <table className="trail-list" >
             <tbody>
