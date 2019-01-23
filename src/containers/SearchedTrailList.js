@@ -107,6 +107,7 @@ class SearchedTrailList extends Component {
 const mapStateToProps = (state => {
   return ({
     trails: state.trailsReducers.trails,
+    noTrails: state.trailsReducers.noTrails,
     userTrails: state.usersReducers.userTrails,
     location: state.trailsReducers.location,
   })

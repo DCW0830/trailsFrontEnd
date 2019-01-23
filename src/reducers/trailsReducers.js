@@ -30,7 +30,7 @@ export default (
     return {...state, error: false, loading: true}
 
     case 'FETCH_TRAILS':
-    
+
     let convertedDiff = action.payload.trails.map(mapObj => {
       if(mapObj.difficulty === 'green') {
         return {...mapObj, difficulty: 'Easy', rank: 1}

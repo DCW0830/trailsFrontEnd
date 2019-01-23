@@ -63,7 +63,6 @@ export default (
     }
 
     case 'DELETE_FAVORITE':
-
     let newUserTrails = state.userTrails.filter(trail => {
       return trail.trail_number !== action.payload.trail_number
     })
@@ -91,7 +90,6 @@ export default (
         return mapObj
       }
     })
-
     return {
       ...state,
       error: false,

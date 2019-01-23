@@ -7,7 +7,6 @@ export function getTrails(search, radius) {
     .then(res => res.json())
     .then(geocode =>  {
       dispatch({type: 'FETCH_GEOCODE', payload: geocode})
-
       let lat = geocode.results[0].geometry.location.lat
       let lng = geocode.results[0].geometry.location.lng
       const trailsAPI = `${url.trailAPI}&lat=${lat}&lon=${lng}&maxDistance=${radius}`
@@ -15,12 +14,16 @@ export function getTrails(search, radius) {
       dispatch({type: 'LOADING_TRAILS'})
       fetch(trailsAPI)
       .then(res => res.json())
-      .then(trails => dispatch(
-        {type: 'FETCH_TRAILS', payload: trails})
-      )
+      .then(trails => {
+        if(trails.trails[0]) {
+          dispatch({type: 'FETCH_TRAILS', payload: trails})
+        } else {
+          dispatch({type: 'FETCH_ERROR', payload: "There are no trails within your search results!"})
+        }
+      })
     })
     .catch(error => {
-      dispatch({type: 'FETCH_ERROR', payload: error})
+      dispatch({type: 'FETCH_ERROR', payload: "Something went wrong! Check your entry and try again!"})
     })
   }
 }

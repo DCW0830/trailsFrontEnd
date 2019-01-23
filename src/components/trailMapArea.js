@@ -19,20 +19,20 @@
 //
 // class TrailMapArea extends Component  {
 //
-//   // lonToX = (lon) => {
-//   //     newX = round(deg2rad(lon) * 6378137.0);
-//   //     if (is_nan(newX)) {
-//   //         newX = 0;
-//   //     }
-//   //     return newX;
-//   // }
-//   //
-//   // latToY = (lat) =>{
-//   //     newY = round(log(tan(M_PI_4 + deg2rad(lat) / 2.0)) * 6378137.0);
-//   //     if (is_nan(newY)) {
-//   //         newY = 0;
-//   //     }
-//   //     return newY;
+  // lonToX = (lon) => {
+  //     newX = round(deg2rad(lon) * 6378137.0);
+  //     if (is_nan(newX)) {
+  //         newX = 0;
+  //     }
+  //     return newX;
+  // }
+  //
+  // latToY = (lat) =>{
+  //     newY = round(log(tan(M_PI_4 + deg2rad(lat) / 2.0)) * 6378137.0);
+  //     if (is_nan(newY)) {
+  //         newY = 0;
+  //     }
+  //     return newY;
 //   // }
 //
 //   render(){
