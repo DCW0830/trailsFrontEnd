@@ -1,5 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import { Menu } from 'semantic-ui-react'
+import '../assets/css/index.css'
 
 const link = {
   width: '100px',
@@ -12,34 +14,37 @@ const link = {
 
 const NavBar = () => {
   return (
-    <div>
-      <NavLink
-        to="/"
-        exact
-        style={link}
-        activeStyle={{
-          background: 'darkblue'
-        }}
-      >Base Camp</NavLink>
+    <Menu id='navBar'>
+      <Menu.Item>
+        <NavLink
+          to="/"
+          exact
+          style={link}
+          activeStyle={{background: 'darkblue'}}
+        >Base Camp</NavLink>
+      </Menu.Item>
+      <Menu.Item>
+        <NavLink
+          to="/findTrails"
+          exact
+          style={link}
+          activeStyle={{
+            background: 'darkblue'
+          }}
+        >Find Trails</NavLink>
+      </Menu.Item>
 
-      <NavLink
-        to="/findTrails"
-        exact
-        style={link}
-        activeStyle={{
-          background: 'darkblue'
-        }}
-      >Find Trails</NavLink>
-
-      <NavLink
-        to='/logOut'
-        exact
-        style={link}
-        activeStyle={{
-          background: 'darkblue'
-        }}
-      >Log Out</NavLink>
-    </div>
+      <Menu.Item>
+        <NavLink
+          to='/logOut'
+          exact
+          style={link}
+          activeStyle={{
+            background: 'darkblue'
+          }}
+        >Log Out</NavLink>
+      </Menu.Item>
+    </Menu>
   )
 }
 

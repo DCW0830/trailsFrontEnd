@@ -1,13 +1,27 @@
-table.trail-list {
-  margin: 20px 0;
-  width: 100%;
+
+
+.standard {
+  position: relative;
+  left: 50px;
+  top: 20px;
 }
 
-table.trail-list td,
-table.trail-list th {
-  border: 1px solid #cbcbcb;
-  padding: 15px;
+#trailList{
+  border: 3px solid black;
 }
 
-table.trail-list th {
-  background-color: #e0e0e0
+.selectedMap {
+  position: relative;
+  left: 690px;
+  bottom: 925px;
+  width: 900px;
+  margin: 6px;
+  height: 400px;
+  border: 7px solid green;
+}
+
+#navBar {
+  float: right;
+  position: relative;
+
+}

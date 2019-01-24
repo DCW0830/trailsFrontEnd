@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Table } from 'semantic-ui-react'
 
 class Trail extends Component{
 
@@ -19,15 +20,15 @@ class Trail extends Component{
     const {name, difficulty, length, location, id} = this.props.trail
 
     return (
-      <tr onClick={()=> this.props.trailMap(id)} >
-        <td>{name}</td>
-        <td>{difficulty}</td>
-        <td><center>{length}</center></td>
-        <td><center>{location}</center></td>
-        <td onClick={(event)=>this.handleClick(event, id)}>
-        {this.state.click? <center>Remove</center> : <center>Add</center>}
-        </td>
-      </tr>
+      <Table.Row onClick={()=> this.props.trailMap(id)} >
+        <Table.Cell>{name}</Table.Cell>
+        <Table.Cell>{difficulty}</Table.Cell>
+        <Table.Cell>{length}</Table.Cell>
+        <Table.Cell>{location}</Table.Cell>
+        <Table.Cell onClick={(event)=>this.handleClick(event, id)}>
+          {this.state.click? 'Remove' : 'Add'}
+        </Table.Cell>
+      </Table.Row>
     )
   }
 }

@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { logIn } from '../actions/users'
+import {Button, Input} from 'semantic-ui-react'
+
 
 class Login extends Component {
   state = {
@@ -32,16 +34,19 @@ class Login extends Component {
       <div>
         <h2>Sign In!</h2>
           <form onSubmit={this.handleSubmit}>
-            <label>Username:</label>
-            <input
+
+            <Input
+              placeholder='username'
               value={this.state.username}
               name='username'
               onChange={this.handleChange}
               type="text"
             />
             <br/>
-            <label>Password:</label>
-            <input
+
+            <Input
+             action='Sign In!'
+             placeholder='password'
              value={this.state.pw}
              name='pw'
              onChange={this.handleChange}
@@ -51,7 +56,7 @@ class Login extends Component {
               {this.state.click? ' Hide?' : ' Show?'}
             </span>
             <br/>
-            <button>Sign In!</button>
+            <Button >Sign In!</Button>
 
           </form>
         <br/>
