@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { logIn } from '../actions/users'
-import {Button, Input} from 'semantic-ui-react'
-
+import {Input} from 'semantic-ui-react'
+import '../assets/css/index.css'
 
 class Login extends Component {
   state = {
@@ -11,6 +11,13 @@ class Login extends Component {
     pw: '',
     click: false
   }
+
+  pStyle = {
+    fontSize: '15px',
+    position: 'relative',
+    left: '175px'
+  };
+
 
   handleChange = (event) => {
     this.setState (
@@ -31,40 +38,36 @@ class Login extends Component {
     const { error } = this.props
 
     return (
-      <div>
+      <div className='standard'>
         <h2>Sign In!</h2>
           <form onSubmit={this.handleSubmit}>
-
             <Input
-              placeholder='username'
+              placeholder='Username'
               value={this.state.username}
               name='username'
               onChange={this.handleChange}
               type="text"
             />
-            <br/>
-
             <Input
              action='Sign In!'
-             placeholder='password'
+             placeholder='Password'
              value={this.state.pw}
              name='pw'
              onChange={this.handleChange}
              type={this.state.click? "text": 'Password'}
             />
-            <span onClick={()=> this.setState({click: !this.state.click }) }>
-              {this.state.click? ' Hide?' : ' Show?'}
-            </span>
-            <br/>
-            <Button >Sign In!</Button>
-
           </form>
-        <br/>
+
         {error ? <h2>{error}: Verify Your Username And Password!</h2>:null}
         <span>
           Click to Create Account!
+          <Link to='/SignUp'> Sign Up</Link>
+        </span >
+        <span style={this.pStyle} onClick={()=> this.setState({click: !this.state.click }) }>
+          {this.state.click? ' Hide?' : ' Show?'}
         </span>
-        <Link to='/SignUp'> Sign Up</Link>
+
+
       </div>
     );
   }
