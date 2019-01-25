@@ -7,7 +7,7 @@ class SelectedTrailMap extends Component  {
   render(){
     const { trailNumber } = this.props
     return (
-      <div >
+      <div>
         <iframe className='selectedMap'
           title='selectedTrail'
           sandbox="allow-pointer-lock allow-same-origin allow-scripts"

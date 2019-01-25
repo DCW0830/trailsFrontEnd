@@ -76,34 +76,38 @@ class SearchedTrailList extends Component {
     const { city, state, county, zipCode} =this.props.location
     const {trails} = this.props
     return (
-      <div className='standard'>
+      <div className='FixedHeightContainer'>
+        <div className= 'Title'>
+          {city? `Trail Results For: ${city.long_name}`: null}
+          {state? ` ${state.long_name}`: null}
+          {zipCode? ` ${zipCode.long_name}`: null}
+          {county? ` ${county.long_name}`: null}
+          {trails[0]? this.displayResults(): null}
 
-        {city? `Trail Results For: ${city.long_name}`: null}
-        {state? ` ${state.long_name}`: null}
-        {zipCode? ` ${zipCode.long_name}`: null}
-        {county? ` ${county.long_name}`: null}
-        {trails[0]? this.displayResults(): null}
-        <form>
-          <Table id='trailList' size='large' sortable striped celled selectable collapsing>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell onClick={this.handleClick}>Name</Table.HeaderCell>
-                <Table.HeaderCell onClick={this.handleClick}>Difficulty</Table.HeaderCell>
-                <Table.HeaderCell onClick={this.handleClick}>Length</Table.HeaderCell>
-                <Table.HeaderCell onClick={this.handleClick}>Location</Table.HeaderCell>
-                <Table.HeaderCell>Favorite</Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
 
-            <Table.Body>
-            {this.createTrail()}
-            </Table.Body>
+          <Table  size='large' sortable striped celled selectable collapsing>
+            <div className='headerContainer' >
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell onClick={this.handleClick}>Name</Table.HeaderCell>
+                  <Table.HeaderCell onClick={this.handleClick}>Difficulty</Table.HeaderCell>
+                  <Table.HeaderCell onClick={this.handleClick}>Length</Table.HeaderCell>
+                  <Table.HeaderCell onClick={this.handleClick}>Location</Table.HeaderCell>
+                  <Table.HeaderCell>Favorite</Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+            </div>
+            <div className='content'>
+              <Table.Body>
+              {this.createTrail()}
+              </Table.Body>
+            </div>
           </Table>
+          </div>
           <p>
             {trails.length > pa? <Button content='Previous' icon='left arrow' labelPosition='left' onClick={this.handlePrevious}/>:null}
             {trails.length > pa? <Button content='Next' icon='right arrow' labelPosition='right' onClick={this.handleNext}/>:null}
           </p>
-        </form>
       </div>
     );
   }

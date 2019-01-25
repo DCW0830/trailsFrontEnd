@@ -1,22 +1,16 @@
 import React, {Component} from 'react';
 import url from '../urls'
 import {connect} from 'react-redux'
-
-const link = {
-  width: '600px',
-  padding: '12px',
-  height: '1000px'
-}
+import '../assets/css/index.css'
 
 class UserTrailMap extends Component  {
   render(){
     const { trailNumber } = this.props
     return (
       <div>
-        <iframe
-          title='selectedTrail'
+        <iframe id='userMap'
+          title='userTrail'
           sandbox="allow-pointer-lock allow-same-origin allow-scripts"
-          style= {link}
           frameBorder="0"
           scrolling="no"
           src= {url.areaMap + trailNumber}

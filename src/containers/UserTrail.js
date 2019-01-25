@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import {trailMap} from'../actions/trails'
 import {deleteFavorite} from'../actions/users'
+import { Table } from 'semantic-ui-react'
 
 class Trail extends Component{
 
@@ -9,15 +10,15 @@ class Trail extends Component{
     const {name, difficulty, length, location, id} = this.props.trail
     const {userTrailId} = this.props
     return (
-      <tr onClick={()=> this.props.trailMap(id, userTrailId.id )} >
-        <td>{name}</td>
-        <td>{difficulty}</td>
-        <td><center>{length}</center></td>
-        <td><center>{location}</center></td>
-        <td onClick={()=>this.props.deleteFavorite(userTrailId.id)}>
+      <Table.Row onClick={()=> this.props.trailMap(id, userTrailId.id )} >
+        <Table.Cell>{name}</Table.Cell>
+        <Table.Cell>{difficulty}</Table.Cell>
+        <Table.Cell><center>{length}</center></Table.Cell>
+        <Table.Cell><center>{location}</center></Table.Cell>
+        <Table.Cell onClick={()=>this.props.deleteFavorite(userTrailId.id)}>
           <center>X</center>
-        </td>
-      </tr>
+        </Table.Cell>
+      </Table.Row>
     )
   }
 }

@@ -15,14 +15,14 @@ const link = {
 const NavBar = () => {
   return (
     <Menu id='navBar'>
-      <Menu.Item>
+      <Menu.Item position='right'>
         <NavLink
           to="/"
           exact
           style={link}
           activeStyle={{background: 'darkblue'}}
         >Base Camp</NavLink>
-      </Menu.Item>
+    </Menu.Item>
       <Menu.Item>
         <NavLink
           to="/findTrails"

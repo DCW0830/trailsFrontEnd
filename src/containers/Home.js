@@ -4,6 +4,7 @@ import UserTrailList from '../components/UserTrailList'
 import UserTrailMap from '../components/UserTrailMap'
 import {connect} from 'react-redux'
 import {fetchUserTrails} from '../actions/trails'
+import '../assets/css/index.css'
 
 class Home extends Component {
 
@@ -14,18 +15,15 @@ class Home extends Component {
     return (
       <div>
         <div>
-          <NavBar />
+        <NavBar  />
         </div>
-        <h1>Welcome to Base Camp: {username}!</h1>
+        <div className='standard'>Welcome to Base Camp: {username}!</div>
         {loading? this.props.fetchUserTrails(userTrailsString) : null}
-        <div>
-          {userTrailsString? <UserTrailList userTrails={userTrails} userFetchedTrails={fetchedUserTrails}/> : <h2>You Currently Have No Favorite Trails. Go Find Some!</h2>}
-        </div>
-        <div>
-          {userTrailsString? <UserTrailMap/> : null}
-        </div>
-      </div>
 
+        {userTrailsString? <UserTrailList userTrails={userTrails} userFetchedTrails={fetchedUserTrails}/> : <h2 className='standard'>You Currently Have No Favorite Trails. Go Find Some!</h2>}
+
+        {userTrailsString? <UserTrailMap/> : null}
+      </div>
     );
   }
 }
