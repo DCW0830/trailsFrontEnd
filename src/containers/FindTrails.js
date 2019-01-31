@@ -12,7 +12,7 @@ class FindTrails extends Component {
       <div>
         <NavBar/>
         <FindTrailsForm />
-        {error? <h2>{error}</h2>: null}
+        {error? <h2 className='standard'>{error}</h2>: null}
         {trails[0]? <SearchedTrailList /> : null}
         {trails[0]? <SelectedTrailMap/> : null}
       </div>

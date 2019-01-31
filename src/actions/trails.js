@@ -18,7 +18,7 @@ export function getTrails(search, radius) {
         if(trails.trails[0]) {
           dispatch({type: 'FETCH_TRAILS', payload: trails})
         } else {
-          dispatch({type: 'FETCH_ERROR', payload: "There are no trails within your search results!"})
+          dispatch({type: 'FETCH_ERROR', payload: "Sorry, there are no trails within your search parameters!"})
         }
       })
     })

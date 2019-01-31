@@ -15,9 +15,8 @@ class Login extends Component {
   pStyle = {
     fontSize: '15px',
     position: 'relative',
-    left: '175px'
+    left: '170px'
   };
-
 
   handleChange = (event) => {
     this.setState (
@@ -36,7 +35,6 @@ class Login extends Component {
 
   render() {
     const { error } = this.props
-
     return (
       <div className='standard'>
         <h2>Sign In!</h2>
@@ -62,12 +60,10 @@ class Login extends Component {
         <span>
           Click to Create Account!
           <Link to='/SignUp'> Sign Up</Link>
-        </span >
+        </span>
         <span style={this.pStyle} onClick={()=> this.setState({click: !this.state.click }) }>
           {this.state.click? ' Hide?' : ' Show?'}
         </span>
-
-
       </div>
     );
   }

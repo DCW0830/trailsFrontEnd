@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import Trail from '../components/Trail'
 import {addFavorite, deleteFavorite} from '../actions/users'
-import { Table, Button, } from 'semantic-ui-react'
+import { Table, Button, Menu } from 'semantic-ui-react'
 import {trailMap, trailSort} from'../actions/trails'
 import '../assets/css/index.css'
-const pa = 20
+const pa = 7
 
 class SearchedTrailList extends Component {
   state = {
@@ -83,10 +83,8 @@ class SearchedTrailList extends Component {
           {zipCode? ` ${zipCode.long_name}`: null}
           {county? ` ${county.long_name}`: null}
           {trails[0]? this.displayResults(): null}
-
-
-          <Table  size='large' sortable striped celled selectable collapsing>
-            <div className='headerContainer' >
+          <Table attached='top' size='large' sortable striped celled selectable padded>
+            <div className='content'>
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell onClick={this.handleClick}>Name</Table.HeaderCell>
@@ -96,18 +94,30 @@ class SearchedTrailList extends Component {
                   <Table.HeaderCell>Favorite</Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
-            </div>
-            <div className='content'>
+
               <Table.Body>
-              {this.createTrail()}
+                {this.createTrail()}
               </Table.Body>
+
             </div>
           </Table>
-          </div>
-          <p>
-            {trails.length > pa? <Button content='Previous' icon='left arrow' labelPosition='left' onClick={this.handlePrevious}/>:null}
-            {trails.length > pa? <Button content='Next' icon='right arrow' labelPosition='right' onClick={this.handleNext}/>:null}
-          </p>
+        </div>
+
+        <Table.Footer>
+          <Table.Row>
+            <Table.HeaderCell colSpan='3'>
+              <Menu pagination>
+                <Menu.Item>
+                 {trails.length > pa? <Button content='Previous' icon='left arrow' labelPosition='left' onClick={this.handlePrevious}/>:null}
+                </Menu.Item>
+
+                <Menu.Item>
+                 {trails.length > pa? <Button content='Next' icon='right arrow' labelPosition='right' onClick={this.handleNext}/>:null}
+                </Menu.Item>
+              </Menu>
+            </Table.HeaderCell>
+          </Table.Row>
+        </Table.Footer>
       </div>
     );
   }

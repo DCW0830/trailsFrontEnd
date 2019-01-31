@@ -15,9 +15,9 @@ class Home extends Component {
     return (
       <div>
         <div>
-        <NavBar  />
+          <NavBar  />
         </div>
-        <div className='standard'>Welcome to Base Camp: {username}!</div>
+        <span id='BaseCamp'>Welcome to Base Camp: {username}!</span>
         {loading? this.props.fetchUserTrails(userTrailsString) : null}
 
         {userTrailsString? <UserTrailList userTrails={userTrails} userFetchedTrails={fetchedUserTrails}/> : <h2 className='standard'>You Currently Have No Favorite Trails. Go Find Some!</h2>}

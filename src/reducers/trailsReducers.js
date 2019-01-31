@@ -55,7 +55,7 @@ export default (
     }
 
     case 'FETCH_ERROR':
-    return {...state, loading: false, error: action.payload}
+    return {...state, trails: [], loading: false, error: action.payload}
 
     case 'CLEAR_STATE' :
     return {

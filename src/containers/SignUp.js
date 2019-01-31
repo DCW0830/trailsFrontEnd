@@ -13,6 +13,12 @@ class SignUp extends Component {
     click: false
   }
 
+  pStyle = {
+    fontSize: '15px',
+    position: 'relative',
+    left: '320px'
+  };
+
   handleChange = (event) => {
     this.setState (
       {[event.target.name]: event.target.value}
@@ -42,8 +48,6 @@ class SignUp extends Component {
               onChange={this.handleChange}
               type="text"
             />
-            <br/>
-
             <Input
              placeholder='Password'
              value={this.state.pw}
@@ -51,11 +55,6 @@ class SignUp extends Component {
              onChange={this.handleChange}
              type={this.state.click? "text": 'Password'}
             />
-            <span onClick={()=> this.setState({click: !this.state.click }) }>
-              {this.state.click? ' Hide?' : ' Show?'}
-            </span>
-            <br/>
-
             <Input
               action='Create Account!'
               value={this.state.pwConfirmation}
@@ -63,14 +62,15 @@ class SignUp extends Component {
               name='pwConfirmation'
               onChange={this.handleChange} type={this.state.click? "text": 'Password'}
             />
-
           </form>
-        <br/>
-        {error ? <h2>{error}: Try Again!</h2>:null}
-        <span>
-          Click to Sign In As Existing User!
-        </span>
-        <Link to="/"> Log In</Link>
+          {error ? <h2>{error}: Try Again!</h2>:null}
+          <span>
+            Click to Sign In As Existing User!
+            <Link to="/"> Log In</Link>
+          </span>
+          <span style={this.pStyle} onClick={()=> this.setState({click: !this.state.click }) }>
+            {this.state.click? ' Hide?' : ' Show?'}
+          </span>
       </div>
     );
   }
