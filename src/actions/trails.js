@@ -17,7 +17,6 @@ export function getTrails(search, radius) {
       .then(trails => {
         if(trails.trails[0]) {
           localStorage.setItem('searchedTrails', JSON.stringify(trails.trails))
-          console.log(localStorage.trails)
           dispatch({type: 'FETCH_TRAILS', payload: trails})
         } else {
           dispatch({type: 'FETCH_ERROR', payload: "Sorry, there are no trails within your search parameters!"})
@@ -31,13 +30,13 @@ export function getTrails(search, radius) {
 }
 
 export function fetchUserTrails(string) {
+  console.log(string)
   return (dispatch) => {
     if(string) {
       fetch(`${url.trailApiById}&ids=${string}`)
       .then(res => res.json())
       .then(userTrails =>  {
         localStorage.setItem('userTrails', JSON.stringify(userTrails.trails))
-        console.log(localStorage.trails)
         dispatch({type: 'FETCH_USER_TRAILS', payload: userTrails})
       })
       .catch(error => {
