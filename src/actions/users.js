@@ -88,7 +88,9 @@ export function addFavorite (trailNumber) {
 }
 
 export function deleteFavorite (trailId) {
+  console.log(trailId)
   return (dispatch) => {
+
     fetch(`${url.deleteTrail}/${trailId}`, {
       method: 'DELETE',
       headers:{
@@ -96,6 +98,7 @@ export function deleteFavorite (trailId) {
       }
     }).then(res => res.json())
     .then(trail =>  {
+      console.log(trail)
       if (trail.id) {
         dispatch({type: 'DELETE_FAVORITE', payload: trail})
       } else if (trail.errors) {

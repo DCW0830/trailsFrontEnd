@@ -21,14 +21,12 @@ class Trail extends Component{
 
     return (
       <Table.Row onClick={()=> this.props.trailMap(id)}>
-          <Table.Cell selectable>
-            <a href='#'>{name}</a>
-          </Table.Cell>
+          <Table.Cell>{name}</Table.Cell>
           <Table.Cell>{difficulty}</Table.Cell>
           <Table.Cell>{length}</Table.Cell>
           <Table.Cell>{location}</Table.Cell>
-          <Table.Cell selectable onClick={(event)=>this.handleClick(event, id)}>
-            <a href='#'>{this.state.click? 'Remove' : 'Add'}</a>
+          <Table.Cell onClick={(event)=>this.handleClick(event, id)}>
+            {this.state.click? 'Remove' : 'Add'}
           </Table.Cell>
       </Table.Row>
     )

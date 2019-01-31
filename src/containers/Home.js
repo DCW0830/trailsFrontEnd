@@ -10,19 +10,19 @@ class Home extends Component {
 
   render() {
     const {userTrailsString, fetchedUserTrails, loading, userTrails, currentUser} = this.props
-    console.log(fetchedUserTrails)
+    console.log(currentUser)
 
     return (
       <div>
         <div>
-          <NavBar  />
+          <NavBar/>
         </div>
         <span id='BaseCamp'>Welcome to Base Camp: {currentUser}!</span>
         {loading? this.props.fetchUserTrails(userTrailsString) : null}
 
-        {fetchedUserTrails? <UserTrailList userTrails={userTrails} userFetchedTrails={fetchedUserTrails}/> : <h2 className='standard'>You Currently Have No Favorite Trails. Go Find Some!</h2>}
+        {userTrailsString? <UserTrailList userTrails={userTrails} userFetchedTrails={fetchedUserTrails}/> : <h2 className='standard'>You Currently Have No Favorite Trails. Go Find Some!</h2>}
 
-        {fetchUserTrails? <UserTrailMap/> : null}
+        {userTrailsString? <UserTrailMap/> : null}
       </div>
     );
   }

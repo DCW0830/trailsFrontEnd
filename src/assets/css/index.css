@@ -49,6 +49,7 @@
   display: table-header-group;
   height:400px;
   overflow:auto;
+  cursor: pointer;
 }
 
 #userMap{

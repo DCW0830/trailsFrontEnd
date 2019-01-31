@@ -1,12 +1,11 @@
 let mapStart = () => {
- if(localStorage['userTrails']) {
+  if(localStorage['userTrails']) {
    let newArray = JSON.parse(localStorage.getItem('userTrails'))
    return newArray[0].id
- } else {
+  } else {
    return ''
- }
+  }
 }
-
 
 export default (
   state = {
@@ -44,10 +43,12 @@ export default (
     case 'CLEAR_STATE':
     return {
       currentUser: '',
+      userTrails: [],
       userTrailsString: '',
-      userTrails:[],
+      loading: false,
+      fetchedUserTrails: [],
       error: false,
-      loading: false
+      trailNumber: ''
     }
 
     case 'ADD_USER_TRAIL':

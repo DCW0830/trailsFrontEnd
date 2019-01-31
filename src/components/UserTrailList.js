@@ -31,22 +31,22 @@ class UserTrailList extends Component {
       <div id='UserTrailListContainer'>
         <div className='Title'>
           <h2>Your Saved Trails:</h2>
-          <Table attached='top'  size='large' sortable striped celled selectable padded>
-            <div className='content'>
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell onClick={this.handleClick}>Name</Table.HeaderCell>
-                  <Table.HeaderCell onClick={this.handleClick}>Difficulty</Table.HeaderCell>
-                  <Table.HeaderCell onClick={this.handleClick}>Length</Table.HeaderCell>
-                  <Table.HeaderCell onClick={this.handleClick}>Location</Table.HeaderCell>
-                  <Table.HeaderCell>Remove</Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
+          <Table className='content' attached='top'  size='large' sortable striped celled selectable padded>
 
-              <Table.Body>
-                {this.createTrail()}
-              </Table.Body>
-            </div>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell onClick={this.handleClick}>Name</Table.HeaderCell>
+                <Table.HeaderCell onClick={this.handleClick}>Difficulty</Table.HeaderCell>
+                <Table.HeaderCell onClick={this.handleClick}>Length</Table.HeaderCell>
+                <Table.HeaderCell onClick={this.handleClick}>Location</Table.HeaderCell>
+                <Table.HeaderCell>Remove</Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+
+            <Table.Body>
+              {this.createTrail()}
+            </Table.Body>
+
           </Table>
         </div>
       </div>

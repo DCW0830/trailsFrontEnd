@@ -83,41 +83,39 @@ class SearchedTrailList extends Component {
           {zipCode? ` ${zipCode.long_name}`: null}
           {county? ` ${county.long_name}`: null}
           {trails[0]? this.displayResults(): null}
-          <Table attached='top' size='large' sortable striped celled selectable padded>
-            <div className='content'>
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell onClick={this.handleClick}>Name</Table.HeaderCell>
-                  <Table.HeaderCell onClick={this.handleClick}>Difficulty</Table.HeaderCell>
-                  <Table.HeaderCell onClick={this.handleClick}>Length</Table.HeaderCell>
-                  <Table.HeaderCell onClick={this.handleClick}>Location</Table.HeaderCell>
-                  <Table.HeaderCell>Favorite</Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
+          <Table className='content' attached='top' size='large' sortable striped celled selectable padded>
 
-              <Table.Body>
-                {this.createTrail()}
-              </Table.Body>
+            <Table.Header >
+              <Table.Row>
+                <Table.HeaderCell onClick={this.handleClick}>Name</Table.HeaderCell>
+                <Table.HeaderCell onClick={this.handleClick}>Difficulty</Table.HeaderCell>
+                <Table.HeaderCell onClick={this.handleClick}>Length</Table.HeaderCell>
+                <Table.HeaderCell onClick={this.handleClick}>Location</Table.HeaderCell>
+                <Table.HeaderCell>Favorite</Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
 
-            </div>
+            <Table.Body>
+              {this.createTrail()}
+            </Table.Body>
+
+            <Table.Footer>
+              <Table.Row>
+                <Table.HeaderCell colSpan='3'>
+                  <Menu pagination>
+                    <Menu.Item>
+                     {trails.length > pa? <Button content='Previous' icon='left arrow' labelPosition='left' onClick={this.handlePrevious}/>:null}
+                    </Menu.Item>
+                    <Menu.Item>
+                     {trails.length > pa? <Button content='Next' icon='right arrow' labelPosition='right' onClick={this.handleNext}/>:null}
+                    </Menu.Item>
+                  </Menu>
+                </Table.HeaderCell>
+              </Table.Row>
+            </Table.Footer>
+            
           </Table>
         </div>
-
-        <Table.Footer>
-          <Table.Row>
-            <Table.HeaderCell colSpan='3'>
-              <Menu pagination>
-                <Menu.Item>
-                 {trails.length > pa? <Button content='Previous' icon='left arrow' labelPosition='left' onClick={this.handlePrevious}/>:null}
-                </Menu.Item>
-
-                <Menu.Item>
-                 {trails.length > pa? <Button content='Next' icon='right arrow' labelPosition='right' onClick={this.handleNext}/>:null}
-                </Menu.Item>
-              </Menu>
-            </Table.HeaderCell>
-          </Table.Row>
-        </Table.Footer>
       </div>
     );
   }
