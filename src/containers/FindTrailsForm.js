@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { getTrails } from '../actions/trails'
-import { Form, Input, Button } from 'semantic-ui-react'
+import { Form } from 'semantic-ui-react'
 import '../assets/css/index.css'
 class FindTrailsForm extends Component {
 

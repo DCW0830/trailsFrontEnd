@@ -1,11 +1,21 @@
+let mapStart = () => {
+ if(localStorage['searchedTrails']) {
+   let newArray = JSON.parse(localStorage.getItem('searchedTrails'))
+   return newArray[0].id
+ } else {
+   return ''
+ }
+}
+
 export default (
+
   state = {
     error: null,
     loading: false,
     location: {},
     latLon: {},
-    trails: [],
-    trailNumber: ''
+    trails: JSON.parse(localStorage.getItem('searchedTrails')) || [],
+    trailNumber: mapStart()
   }, action) => {
   switch (action.type) {
 
@@ -45,6 +55,7 @@ export default (
       } else {
         return mapObj
       }
+
     })
     return {
       ...state,
