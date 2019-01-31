@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import Trail from '../components/Trail'
 import {addFavorite, deleteFavorite} from '../actions/users'
+import { Table, Button, Menu } from 'semantic-ui-react'
 import {trailMap, trailSort} from'../actions/trails'
-const pa = 20
+import '../assets/css/index.css'
+const pa = 7
 
 class SearchedTrailList extends Component {
   state = {
@@ -74,31 +76,48 @@ class SearchedTrailList extends Component {
     const { city, state, county, zipCode} =this.props.location
     const {trails} = this.props
     return (
-      <div>
-        <br/>
-        {city? `Trail Results For: ${city.long_name}`: null}
-        {state? ` ${state.long_name}`: null}
-        {zipCode? ` ${zipCode.long_name}`: null}
-        {county? ` ${county.long_name}`: null}
-        {trails[0]? this.displayResults(): null}
-        <form>
-          <table className="trail-list" >
-            <tbody>
-              <tr>
-                <th onClick={this.handleClick}>Name</th>
-                <th onClick={this.handleClick}>Difficulty</th>
-                <th onClick={this.handleClick}>Length</th>
-                <th onClick={this.handleClick}>Location</th>
-                <th>Favorite</th>
-              </tr>
-              {this.createTrail()}
-            </tbody>
-          </table>
-          <p>
-            {trails.length > pa? <button onClick={this.handlePrevious}>Previous Page</button>:null}
-            {trails.length > pa? <button onClick={this.handleNext}>Next Page</button>:null}
-          </p>
-        </form>
+      <div className='FixedHeightContainer'>
+        <div className= 'Title'>
+          {city? `Trail Results For: ${city.long_name}`: null}
+          {state? ` ${state.long_name}`: null}
+          {zipCode? ` ${zipCode.long_name}`: null}
+          {county? ` ${county.long_name}`: null}
+          {trails[0]? this.displayResults(): null}
+          <Table attached='top' size='large' sortable striped celled selectable padded>
+            <div className='content'>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell onClick={this.handleClick}>Name</Table.HeaderCell>
+                  <Table.HeaderCell onClick={this.handleClick}>Difficulty</Table.HeaderCell>
+                  <Table.HeaderCell onClick={this.handleClick}>Length</Table.HeaderCell>
+                  <Table.HeaderCell onClick={this.handleClick}>Location</Table.HeaderCell>
+                  <Table.HeaderCell>Favorite</Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+
+              <Table.Body>
+                {this.createTrail()}
+              </Table.Body>
+
+            </div>
+          </Table>
+        </div>
+
+        <Table.Footer>
+          <Table.Row>
+            <Table.HeaderCell colSpan='3'>
+              <Menu pagination>
+                <Menu.Item>
+                 {trails.length > pa? <Button content='Previous' icon='left arrow' labelPosition='left' onClick={this.handlePrevious}/>:null}
+                </Menu.Item>
+
+                <Menu.Item>
+                 {trails.length > pa? <Button content='Next' icon='right arrow' labelPosition='right' onClick={this.handleNext}/>:null}
+                </Menu.Item>
+              </Menu>
+            </Table.HeaderCell>
+          </Table.Row>
+        </Table.Footer>
       </div>
     );
   }

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { getTrails } from '../actions/trails'
-
+import { Form } from 'semantic-ui-react'
+import '../assets/css/index.css'
 class FindTrailsForm extends Component {
 
   state = {
@@ -18,40 +19,51 @@ class FindTrailsForm extends Component {
   }
 
   render() {
+    const {loading} = this.props
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <p>
-           <label>
-             {'Enter City, State or Zip Code:   '}
-           </label>
-           <input
-             name='search'
-             value={this.state.search}
-             onChange={(event)=>this.setState({
-              search: event.target.value
-             })}
-             type="text"
-            />
-            <input
-              value={this.state.slider}
-              onChange={(event)=>this.setState({
-               slider: event.target.value
-              })}
-              name='radius'
-              type="range"
-              min='0'
-              max='200'
-            />
-            <label>
-              Search Mile Radius:   {this.state.slider}
-            </label>
-          </p>
-         <button>Search</button>
-        </form>
+      <div id='searchForm'>
+        <Form onSubmit={this.handleSubmit}>
+          <h1>{loading? 'Loading Trails...': 'Search For Trails!'}</h1>
+          <div id='searchRight'>
+            <Form.Group>
+              <Form.Field
+                label='Enter City, State or Zip Code:'
+                control='input'
+                onChange={(event)=>this.setState({
+                  search: event.target.value
+                })}
+                name='search'
+                placeholder='City, State or Zip Code'
+                width={2}
+                value={this.state.search}
+                type="text"
+              />
+
+              <Form.Field
+                label={`Search Mile Radius:  ${this.state.slider}`}
+                control='input'
+                value={this.state.slider}
+                width={2}
+                onChange={(event)=>this.setState({
+                 slider: event.target.value
+                })}
+                name='radius'
+                type="range"
+                min='0'
+                max='200'
+              />
+              <Form.Button>Search</Form.Button>
+            </Form.Group>
+          </div>
+        </Form>
       </div>
     );
   }
 };
 
-export default connect (null, {getTrails})(FindTrailsForm);
+const mapStateToProps = (state => {
+  return ({
+    loading: state.trailsReducers.loading,
+  })
+})
+export default connect (mapStateToProps, {getTrails})(FindTrailsForm);

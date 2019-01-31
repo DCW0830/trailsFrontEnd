@@ -1,12 +1,23 @@
+let mapStart = () => {
+ if(localStorage['userTrails']) {
+   let newArray = JSON.parse(localStorage.getItem('userTrails'))
+   return newArray[0].id
+ } else {
+   return ''
+ }
+}
+
+
 export default (
   state = {
-    currentUser: {},
+    currentUser: localStorage.username,
     userTrails: [],
     userTrailsString: '',
     loading: false,
-    fetchedUserTrails: [],
+    fetchedUserTrails: JSON.parse(localStorage.userTrails),
     error: false,
-    trailNumber: ''
+    trailNumber: mapStart()
+
   }, action) => {
 
   switch (action.type) {
@@ -20,7 +31,7 @@ export default (
 
     return {
       ...state,
-      currentUser: action.payload,
+      currentUser: action.payload.username,
       userTrails: action.payload.trails,
       userTrailsString: newString,
       error: false,
@@ -32,7 +43,7 @@ export default (
 
     case 'CLEAR_STATE':
     return {
-      currentUser: {},
+      currentUser: '',
       userTrailsString: '',
       userTrails:[],
       error: false,

@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import UserTrail from '../containers/UserTrail'
 import {trailSort} from'../actions/trails'
+import '../assets/css/index.css'
+import { Table } from 'semantic-ui-react'
 class UserTrailList extends Component {
   state = {
     click: false
@@ -26,20 +28,28 @@ class UserTrailList extends Component {
   }
   render() {
     return (
-      <form>
-        <table className="trail-list" >
-          <tbody>
-            <tr>
-              <th onClick={this.handleClick}>Name</th>
-              <th onClick={this.handleClick}>Difficulty</th>
-              <th onClick={this.handleClick}>Length</th>
-              <th onClick={this.handleClick}>Location</th>
-              <th>Remove</th>
-            </tr>
-            {this.createTrail()}
-          </tbody>
-        </table>
-      </form>
+      <div id='UserTrailListContainer'>
+        <div className='Title'>
+          <h2>Your Saved Trails:</h2>
+          <Table attached='top'  size='large' sortable striped celled selectable padded>
+            <div className='content'>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell onClick={this.handleClick}>Name</Table.HeaderCell>
+                  <Table.HeaderCell onClick={this.handleClick}>Difficulty</Table.HeaderCell>
+                  <Table.HeaderCell onClick={this.handleClick}>Length</Table.HeaderCell>
+                  <Table.HeaderCell onClick={this.handleClick}>Location</Table.HeaderCell>
+                  <Table.HeaderCell>Remove</Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+
+              <Table.Body>
+                {this.createTrail()}
+              </Table.Body>
+            </div>
+          </Table>
+        </div>
+      </div>
     );
   }
 }

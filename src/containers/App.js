@@ -9,10 +9,8 @@ import {clearState} from '../actions/users'
 import {  Router, Route, Redirect} from 'react-router-dom'
 
 class App extends Component {
-
   logOut = () => {
-    if(sessionStorage['id']) sessionStorage.removeItem('id')
-    this.props.clearState()
+    if(localStorage['id']) localStorage.removeItem('id', 'username', 'trails')
     return <Redirect to='/LogIn' />
   }
 
@@ -21,19 +19,15 @@ class App extends Component {
       <Router history={history}>
         <React.Fragment>
           <Route exact path="/" render={ () => loggedIn() ? <Home/> : <Redirect to='/LogIn' /> }/>
-          <Route path="/LogIn" component={()=> loggedIn() ? <Redirect to="/" /> : <LogIn/> }/>
-          <Route path="/SignUp" component={()=> loggedIn() ? <Redirect to='/' /> : <SignUp/> }/>
+          <Route path="/LogIn" component={()=> loggedIn() ? <Redirect to="/" /> : <LogIn clearState={this.props.clearState()}/> }/>
+          <Route path="/SignUp" component={()=> loggedIn() ? <Redirect to='/' /> : <SignUp clearState={this.props.clearState()}/> }/>
           <Route path="/FindTrails" component={()=> loggedIn() ? <FindTrails/> : <Redirect to='/LogIn'/> }/>
           <Route path='/LogOut' component={() => this.logOut()} />
-
         </React.Fragment>
       </Router>
     )
   }
 }
-
-const loggedIn = () => !!sessionStorage['id']
-
-
+const loggedIn = () => !!localStorage['id']
 
 export default connect (null, {clearState})(App)

@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { createUser } from '../actions/users'
+import {Input} from 'semantic-ui-react'
+import '../assets/css/index.css'
 
 class SignUp extends Component {
   state = {
@@ -10,6 +12,12 @@ class SignUp extends Component {
     pwConfirmation: '',
     click: false
   }
+
+  pStyle = {
+    fontSize: '15px',
+    position: 'relative',
+    left: '320px'
+  };
 
   handleChange = (event) => {
     this.setState (
@@ -30,44 +38,39 @@ class SignUp extends Component {
   render() {
     const { error } = this.props
     return (
-      <div>
+      <div className='standard'>
         <h2>Create Account!</h2>
           <form onSubmit={this.handleSubmit}>
-            <label>Username:</label>
-            <input
+            <Input
+              placeholder='Username'
               value={this.state.username}
               name='username'
               onChange={this.handleChange}
               type="text"
             />
-            <br/>
-            <label>Password:</label>
-            <input
+            <Input
+             placeholder='Password'
              value={this.state.pw}
              name='pw'
              onChange={this.handleChange}
              type={this.state.click? "text": 'Password'}
             />
-            <span onClick={()=> this.setState({click: !this.state.click }) }>
-              {this.state.click? ' Hide?' : ' Show?'}
-            </span>
-            <br/>
-            <label>Password Confirmation:</label>
-            <input
+            <Input
+              action='Create Account!'
               value={this.state.pwConfirmation}
+              placeholder='Password Confirmation'
               name='pwConfirmation'
               onChange={this.handleChange} type={this.state.click? "text": 'Password'}
             />
-
-            <br/>
-            <button>Create Account!</button>
           </form>
-        <br/>
-        {error ? <h2>{error}: Try Again!</h2>:null}
-        <span>
-          Click to Sign In As Existing User!
-        </span>
-        <Link to="/"> Log In</Link>
+          {error ? <h2>{error}: Try Again!</h2>:null}
+          <span>
+            Click to Sign In As Existing User!
+            <Link to="/"> Log In</Link>
+          </span>
+          <span style={this.pStyle} onClick={()=> this.setState({click: !this.state.click }) }>
+            {this.state.click? ' Hide?' : ' Show?'}
+          </span>
       </div>
     );
   }

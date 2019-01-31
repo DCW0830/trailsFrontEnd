@@ -17,7 +17,8 @@ export function createUser(userInput) {
     }).then(res => res.json())
     .then(newUser =>  {
       if (newUser.id) {
-        sessionStorage.setItem('id', newUser.id)
+        localStorage.setItem('id', newUser.id)
+        localStorage.setItem('username', newUser.username)
         history.push('/')
         dispatch({type: 'LOG_IN', payload: newUser})
       } else if (newUser.errors) {
@@ -45,7 +46,8 @@ export function logIn(userInput) {
     }).then(res => res.json())
     .then(returningUser =>  {
       if (returningUser.id) {
-        sessionStorage.setItem('id', returningUser.id)
+        localStorage.setItem('id', returningUser.id)
+        localStorage.setItem('username', returningUser.username)
         history.push('/')
         dispatch({type: 'LOG_IN', payload: returningUser})
       } else if (returningUser.errors) {
@@ -63,7 +65,7 @@ export function addFavorite (trailNumber) {
     fetch(url.createTrail, {
       method: 'POST',
       body: JSON.stringify({
-        user_id: sessionStorage.id,
+        user_id: localStorage.id,
         trail: {
           trail_number: trailNumber,
         }
