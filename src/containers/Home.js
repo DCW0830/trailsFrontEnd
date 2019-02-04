@@ -9,9 +9,9 @@ import '../assets/css/index.css'
 class Home extends Component {
 
   render() {
-    const {userTrailsString, fetchedUserTrails, loading, userTrails, currentUser} = this.props
-    console.log(currentUser)
 
+    const {userTrailsString, fetchedUserTrails, loading, userTrails, currentUser} = this.props
+    console.log(fetchedUserTrails)
     return (
       <div>
         <div>

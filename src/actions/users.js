@@ -1,9 +1,9 @@
 import url from '../urls'
 import history from '../history'
 
-export function createUser(userInput) {
+export function logIn(userInput) {
   return (dispatch) => {
-    fetch(url.signUp, {
+    fetch(url.logIn, {
       method: 'POST',
       body: JSON.stringify(
         {user: {
@@ -15,43 +15,14 @@ export function createUser(userInput) {
         'Content-Type': 'application/json'
       }
     }).then(res => res.json())
-    .then(newUser =>  {
-      if (newUser.id) {
-        localStorage.setItem('id', newUser.id)
-        localStorage.setItem('username', newUser.username)
+    .then(user =>  {
+      if (user.id) {
+        localStorage.setItem('id', user.id)
+        localStorage.setItem('username', user.username)
         history.push('/')
-        dispatch({type: 'LOG_IN', payload: newUser})
-      } else if (newUser.errors) {
-        dispatch({type: 'FETCH_ERROR', payload: newUser.errors})
-      }
-    })
-    .catch(error => {
-      dispatch({type: 'FETCH_ERROR', payload: error})
-    })
-  }
-}
-
-export function logIn(userInput) {
-  return (dispatch) => {
-    fetch(url.logIn, {
-      method: 'POST',
-      body: JSON.stringify(
-        {user: {
-        username: userInput.username,
-        password: userInput.pw
-      } }),
-      headers:{
-        'Content-Type': 'application/json'
-      }
-    }).then(res => res.json())
-    .then(returningUser =>  {
-      if (returningUser.id) {
-        localStorage.setItem('id', returningUser.id)
-        localStorage.setItem('username', returningUser.username)
-        history.push('/')
-        dispatch({type: 'LOG_IN', payload: returningUser})
-      } else if (returningUser.errors) {
-        dispatch({type: 'FETCH_ERROR', payload: returningUser.errors})
+        dispatch({type: 'LOG_IN', payload: user})
+      } else if (user.errors) {
+        dispatch({type: 'FETCH_ERROR', payload: user.errors})
       }
     })
     .catch(error => {
@@ -62,7 +33,7 @@ export function logIn(userInput) {
 
 export function addFavorite (trailNumber) {
   return (dispatch) => {
-    fetch(url.createTrail, {
+    fetch(url.editTrail, {
       method: 'POST',
       body: JSON.stringify({
         user_id: localStorage.id,
@@ -88,10 +59,8 @@ export function addFavorite (trailNumber) {
 }
 
 export function deleteFavorite (trailId) {
-  console.log(trailId)
   return (dispatch) => {
-
-    fetch(`${url.deleteTrail}/${trailId}`, {
+    fetch(`${url.editTrail}/${trailId}`, {
       method: 'DELETE',
       headers:{
         'Content-Type': 'application/json'

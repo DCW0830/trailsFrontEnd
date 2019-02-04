@@ -1,32 +1,33 @@
-let mapStart = () => {
-  if(localStorage['userTrails']) {
-   let newArray = JSON.parse(localStorage.getItem('userTrails'))
-   return newArray[0].id
-  } else {
-   return ''
-  }
-}
+// let mapStart = () => {
+//   if(localStorage['userTrails']) {
+//    let newArray = JSON.parse(localStorage.getItem('userTrails'))
+//    return newArray[0].id
+//   } else {
+//    return ''
+//   }
+// }
 
 export default (
   state = {
-    currentUser: localStorage.username,
-    userTrails: [],
-    userTrailsString: '',
-    loading: false,
-    fetchedUserTrails: JSON.parse(localStorage.userTrails),
+    trailNumber: '',
+    currentUser: localStorage.getItem('username') || '',
+    userTrailsString: localStorage.getItem('trailsString') || '',
+    fetchedUserTrails: JSON.parse(localStorage.getItem('fetchedUserTrails')) || [],
+    userTrails: JSON.parse(localStorage.getItem('userTrails')) || [],
     error: false,
-    trailNumber: mapStart()
-
+    loading: false
   }, action) => {
 
   switch (action.type) {
-
     case'LOG_IN':
     let newArray = action.payload.trails.map(trail => {
       return trail.trail_number
     })
     let newUnique = [...new Set(newArray)];
     let newString = newUnique.join(',')
+    localStorage.setItem('trailsString', newString)
+    localStorage.setItem('userTrails', JSON.stringify(action.payload.trails))
+    console.log(localStorage.userTrails)
 
     return {
       ...state,
@@ -52,6 +53,7 @@ export default (
     }
 
     case 'ADD_USER_TRAIL':
+    console.log(state.fetchedUserTrails)
     let newObject = [...state.userTrails,
       {
         id: action.payload.id,
@@ -63,6 +65,7 @@ export default (
     })
     let unique = [...new Set(convertedArray)];
     let convertedString = unique.join(',')
+    localStorage.setItem('trailsString', convertedString)
 
     return {
       ...state, loading: true, error: false, userTrailsString: convertedString,
@@ -75,6 +78,7 @@ export default (
     }
 
     case 'DELETE_FAVORITE':
+    console.log(state)
     let newUserTrails = state.userTrails.filter(trail => {
       return trail.trail_number !== action.payload.trail_number
     })
@@ -83,6 +87,7 @@ export default (
     })
     let toUnique = [...new Set(toArray)];
     let toString = toUnique.join(',')
+    localStorage.setItem('trailsString', toString)
 
     return {...state, loading: true, userTrailsString: toString, userTrails: newUserTrails}
 

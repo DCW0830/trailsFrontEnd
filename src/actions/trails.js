@@ -30,13 +30,12 @@ export function getTrails(search, radius) {
 }
 
 export function fetchUserTrails(string) {
-  console.log(string)
   return (dispatch) => {
     if(string) {
       fetch(`${url.trailApiById}&ids=${string}`)
       .then(res => res.json())
       .then(userTrails =>  {
-        localStorage.setItem('userTrails', JSON.stringify(userTrails.trails))
+        localStorage.setItem('fetchedUserTrails', JSON.stringify(userTrails.trails))
         dispatch({type: 'FETCH_USER_TRAILS', payload: userTrails})
       })
       .catch(error => {
