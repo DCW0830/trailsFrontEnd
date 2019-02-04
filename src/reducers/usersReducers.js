@@ -43,7 +43,6 @@ export default (
     }
 
     case 'ADD_USER_TRAIL':
-
     return {
       ...state,
       userTrails: [...state.userTrails, {
@@ -61,11 +60,13 @@ export default (
     }
 
     case 'DELETE_FAVORITE':
-    let remainingTrails = state.fetchedUserTrails.filter(trail => {
+    let remainingUserTrails = state.userTrails.filter(trail => {
+      return trail.trail_number !== action.payload
+    })
+    let remainingFetchedTrails = state.fetchedUserTrails.filter(trail => {
       return trail.id !== action.payload
     })
-
-    return {...state, fetchedUserTrails: remainingTrails}
+    return {...state, userTrails: remainingUserTrails, fetchedUserTrails: remainingFetchedTrails}
 
     case 'FETCH_USER_TRAILS':
     let userConvertedDiff = action.payload.trails.map(mapObj => {
@@ -95,7 +96,6 @@ export default (
     return{...state, loading: false, trailNumber: action.payload}
 
     case 'USER_TRAIL_SORT':
-
     state.fetchedUserTrails.sort(function(a, b){
       let aToBeSorted
       let bToBeSorted
