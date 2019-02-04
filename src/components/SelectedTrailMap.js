@@ -10,7 +10,6 @@ class SelectedTrailMap extends Component  {
       <div>
         <iframe className='selectedMap'
           title='selectedTrail'
-          sandbox="allow-pointer-lock allow-same-origin allow-scripts"
           frameBorder="0"
           scrolling="no"
           src= {url.areaMap + trailNumber}

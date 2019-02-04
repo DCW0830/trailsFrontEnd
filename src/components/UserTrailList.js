@@ -17,13 +17,15 @@ class UserTrailList extends Component {
   }
 
   createTrail = () => {
-    if(this.props.userFetchedTrails) {
+    if(this.props.userFetchedTrails[0]) {
       return this.props.userFetchedTrails.map(trailObj => {
         return <UserTrail
           key={trailObj.id}
           trail={trailObj}
           userTrailId={this.props.userTrails.find(ut=> ut.trail_number === trailObj.id)}/>
       })
+    } else {
+      return null
     }
   }
   render() {
@@ -32,7 +34,6 @@ class UserTrailList extends Component {
         <div className='Title'>
           <h2>Your Saved Trails:</h2>
           <Table className='content' attached='top'  size='large' sortable striped celled selectable padded>
-
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell onClick={this.handleClick}>Name</Table.HeaderCell>
@@ -46,7 +47,6 @@ class UserTrailList extends Component {
             <Table.Body>
               {this.createTrail()}
             </Table.Body>
-
           </Table>
         </div>
       </div>

@@ -10,7 +10,6 @@ class UserTrailMap extends Component  {
       <div>
         <iframe id='userMap'
           title='userTrail'
-          sandbox="allow-pointer-lock allow-same-origin allow-scripts"
           frameBorder="0"
           scrolling="no"
           src= {url.areaMap + trailNumber}

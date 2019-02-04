@@ -9,7 +9,7 @@
 
 export default (
   state = {
-    trailNumber: '',
+    trailNumber: null,
     currentUser: localStorage.getItem('username') || '',
     userTrailsString: localStorage.getItem('trailsString') || '',
     fetchedUserTrails: JSON.parse(localStorage.getItem('fetchedUserTrails')) || [],
@@ -20,20 +20,10 @@ export default (
 
   switch (action.type) {
     case'LOG_IN':
-    let newArray = action.payload.trails.map(trail => {
-      return trail.trail_number
-    })
-    let newUnique = [...new Set(newArray)];
-    let newString = newUnique.join(',')
-    localStorage.setItem('trailsString', newString)
-    localStorage.setItem('userTrails', JSON.stringify(action.payload.trails))
-    console.log(localStorage.userTrails)
-
     return {
       ...state,
       currentUser: action.payload.username,
       userTrails: action.payload.trails,
-      userTrailsString: newString,
       error: false,
       loading: true
     }
@@ -44,52 +34,38 @@ export default (
     case 'CLEAR_STATE':
     return {
       currentUser: '',
-      userTrails: [],
       userTrailsString: '',
       loading: false,
-      fetchedUserTrails: [],
       error: false,
-      trailNumber: ''
+      fetchedUserTrails: [],
+      userTrails: [],
+      trailNumber: null
     }
 
     case 'ADD_USER_TRAIL':
-    console.log(state.fetchedUserTrails)
-    let newObject = [...state.userTrails,
-      {
-        id: action.payload.id,
-        trail_number: action.payload.trail_number
-      }
-    ]
-    let convertedArray =  newObject.map(trail => {
-      return trail.trail_number
-    })
-    let unique = [...new Set(convertedArray)];
-    let convertedString = unique.join(',')
-    localStorage.setItem('trailsString', convertedString)
 
     return {
-      ...state, loading: true, error: false, userTrailsString: convertedString,
-       userTrails: [
-         ...state.userTrails, {
-           id: action.payload.id,
-           trail_number: action.payload.trail_number
-         }
-       ]
+      ...state,
+      userTrails: [...state.userTrails, {
+          id: action.payload.id,
+          trail_number: action.payload.trail_number
+        }
+      ]
+    }
+
+
+    case 'ADD_FETCHED_TRAIL':
+    return {
+      ...state,
+      fetchedUserTrails: [...state.fetchedUserTrails, action.payload.trails[0]]
     }
 
     case 'DELETE_FAVORITE':
-    console.log(state)
-    let newUserTrails = state.userTrails.filter(trail => {
-      return trail.trail_number !== action.payload.trail_number
+    let remainingTrails = state.fetchedUserTrails.filter(trail => {
+      return trail.id !== action.payload
     })
-    let toArray =  newUserTrails.map(trail => {
-      return trail.trail_number
-    })
-    let toUnique = [...new Set(toArray)];
-    let toString = toUnique.join(',')
-    localStorage.setItem('trailsString', toString)
 
-    return {...state, loading: true, userTrailsString: toString, userTrails: newUserTrails}
+    return {...state, fetchedUserTrails: remainingTrails}
 
     case 'FETCH_USER_TRAILS':
     let userConvertedDiff = action.payload.trails.map(mapObj => {
@@ -100,7 +76,7 @@ export default (
       } else if (mapObj.difficulty ==='blue') {
         return {...mapObj, difficulty: 'Moderate', rank: 3}
       } else if (mapObj.difficulty ==='blueBlack') {
-        return {...mapObj, difficulty: 'Moderatly Hard ', rank: 4}
+        return {...mapObj, difficulty: 'Moderately Hard ', rank: 4}
       } else if (mapObj.difficulty ==='black') {
         return {...mapObj, difficulty: 'Hard', rank: 5}
       } else {
