@@ -8,6 +8,7 @@ class Home extends Component {
   render() {
     const {fetchedUserTrails, userTrails, currentUser} = this.props
     console.log(fetchedUserTrails)
+    console.log(currentUser)
     return (
       <div>
         <div>
@@ -28,7 +29,8 @@ const mapStateToProps = (state => {
   return({
     currentUser: state.usersReducers.currentUser,
     fetchedUserTrails: state.usersReducers.fetchedUserTrails,
-    userTrails: state.usersReducers.userTrails
+    userTrails: state.usersReducers.userTrails,
+    loading: state.usersReducers.loading
   })
 })
 export default connect(mapStateToProps)(Home)

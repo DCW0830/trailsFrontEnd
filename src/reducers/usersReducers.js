@@ -1,12 +1,3 @@
-// let mapStart = () => {
-//   if(localStorage['userTrails']) {
-//    let newArray = JSON.parse(localStorage.getItem('userTrails'))
-//    return newArray[0].id
-//   } else {
-//    return ''
-//   }
-// }
-
 export default (
   state = {
     userTrailNumber: localStorage.getItem('userTrailNumber') || null,

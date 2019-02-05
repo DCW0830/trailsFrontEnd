@@ -31,15 +31,18 @@ export function logIn(userInput) {
           .then(res => res.json())
           .then(userTrails =>  {
             dispatch({type: 'FETCH_USER_TRAILS', payload: userTrails})
+            history.push('/')
           })
           .catch(error => {
             dispatch({type: 'FETCH_ERROR', payload: error})
           })
+        } else {
+          history.push('/')
         }
       } else if (user.errors) {
         dispatch({type: 'FETCH_ERROR', payload: user.errors})
       }
-      history.push('/')
+
     })
     .catch(error => {
       dispatch({type: 'FETCH_ERROR', payload: error})
