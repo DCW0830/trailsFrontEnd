@@ -8,12 +8,13 @@ import '../assets/css/index.css'
 class Home extends Component {
   render() {
     const {fetchedUserTrails, userTrails, currentUser} = this.props
+    console.log(fetchedUserTrails)
     return (
       <div>
         <div>
           <NavBar/>
         </div>
-        
+
         <span id='BaseCamp'>Welcome to Base Camp: {currentUser}!</span>
         {fetchedUserTrails[0]?
           <UserTrailList userTrails={userTrails} userFetchedTrails={fetchedUserTrails}/>:

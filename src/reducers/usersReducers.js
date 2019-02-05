@@ -70,7 +70,8 @@ export default (
     })
     return {
       ...state,
-      fetchedUserTrails: [...state.fetchedUserTrails, newTrailConvertedDiff[0]]
+      fetchedUserTrails: [...state.fetchedUserTrails, newTrailConvertedDiff[0]],
+      trailNumber: state.fetchedUserTrails[0]? state.fetchedUserTrails[0].id : newTrailConvertedDiff[0].id
     }
 
     case 'DELETE_FAVORITE':
@@ -80,7 +81,14 @@ export default (
     let remainingFetchedTrails = state.fetchedUserTrails.filter(trail => {
       return trail.id !== action.payload
     })
-    return {...state, userTrails: remainingUserTrails, fetchedUserTrails: remainingFetchedTrails}
+    console.log(remainingFetchedTrails)
+
+    return {
+      ...state,
+      userTrails: remainingUserTrails,
+      fetchedUserTrails: remainingFetchedTrails,
+      trailNumber: remainingFetchedTrails[0]? remainingFetchedTrails[0].id: null
+    }
 
     case 'FETCH_USER_TRAILS':
     let userConvertedDiff = action.payload.trails.map(mapObj => {
