@@ -52,11 +52,25 @@ export default (
       ]
     }
 
-
     case 'ADD_FETCHED_TRAIL':
+    let newTrailConvertedDiff = action.payload.trails.map(mapObj => {
+      if(mapObj.difficulty === 'green') {
+        return {...mapObj, difficulty: 'Easy', rank: 1}
+      } else if (mapObj.difficulty ==='greenBlue') {
+        return {...mapObj, difficulty: 'Moderatly Easy', rank: 2}
+      } else if (mapObj.difficulty ==='blue') {
+        return {...mapObj, difficulty: 'Moderate', rank: 3}
+      } else if (mapObj.difficulty ==='blueBlack') {
+        return {...mapObj, difficulty: 'Moderately Hard ', rank: 4}
+      } else if (mapObj.difficulty ==='black') {
+        return {...mapObj, difficulty: 'Hard', rank: 5}
+      } else {
+        return mapObj
+      }
+    })
     return {
       ...state,
-      fetchedUserTrails: [...state.fetchedUserTrails, action.payload.trails[0]]
+      fetchedUserTrails: [...state.fetchedUserTrails, newTrailConvertedDiff[0]]
     }
 
     case 'DELETE_FAVORITE':
