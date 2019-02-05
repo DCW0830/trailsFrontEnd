@@ -16,7 +16,6 @@ export function getTrails(search, radius) {
       .then(res => res.json())
       .then(trails => {
         if(trails.trails[0]) {
-          localStorage.setItem('searchedTrails', JSON.stringify(trails.trails))
           dispatch({type: 'FETCH_TRAILS', payload: trails})
         } else {
           dispatch({type: 'FETCH_ERROR', payload: "Sorry, there are no trails within your search parameters!"})
@@ -26,24 +25,6 @@ export function getTrails(search, radius) {
     .catch(error => {
       dispatch({type: 'FETCH_ERROR', payload: "Something went wrong! Check your entry and try again!"})
     })
-  }
-}
-
-export function fetchUserTrails(string) {
-  return (dispatch) => {
-    if(string) {
-      fetch(`${url.trailApiById}&ids=${string}`)
-      .then(res => res.json())
-      .then(userTrails =>  {
-        localStorage.setItem('fetchedUserTrails', JSON.stringify(userTrails.trails))
-        dispatch({type: 'FETCH_USER_TRAILS', payload: userTrails})
-      })
-      .catch(error => {
-        dispatch({type: 'FETCH_ERROR', payload: error})
-      })
-    } else {
-      return null
-    }
   }
 }
 

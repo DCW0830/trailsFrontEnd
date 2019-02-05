@@ -27,11 +27,9 @@ export function logIn(userInput) {
           })
           let newUnique = [...new Set(newArray)];
           let newString = newUnique.join(',')
-          localStorage.setItem('trailsString', newString)
           fetch(`${url.trailApiById}&ids=${newString}`)
           .then(res => res.json())
           .then(userTrails =>  {
-            localStorage.setItem('fetchedUserTrails', JSON.stringify(userTrails.trails))
             dispatch({type: 'FETCH_USER_TRAILS', payload: userTrails})
           })
           .catch(error => {
@@ -86,12 +84,8 @@ export function addFavorite (trailNumber) {
 
 export function deleteFavorite (trailId) {
   return (dispatch) => {
-    fetch(`${url.editTrail}/${trailId}`, {
-      method: 'DELETE',
-      headers:{
-        'Content-Type': 'application/json'
-      }
-    }).then(res => res.json())
+    fetch(`${url.editTrail}/${trailId}`, {method: 'DELETE'})
+    .then(res => res.json())
     .then(trail =>  {
       if (trail.id) {
         dispatch({type: 'DELETE_FAVORITE', payload: trail.trail_number})

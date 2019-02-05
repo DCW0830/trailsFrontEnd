@@ -11,7 +11,6 @@ export default (
   state = {
     trailNumber: null,
     currentUser: localStorage.getItem('username') || '',
-    userTrailsString: localStorage.getItem('trailsString') || '',
     fetchedUserTrails: JSON.parse(localStorage.getItem('fetchedUserTrails')) || [],
     userTrails: JSON.parse(localStorage.getItem('userTrails')) || [],
     error: false,
@@ -26,68 +25,6 @@ export default (
       userTrails: action.payload.trails,
       error: false,
       loading: true
-    }
-
-    case 'FETCH_ERROR':
-    return {...state, loading: false, error: action.payload}
-
-    case 'CLEAR_STATE':
-    return {
-      currentUser: '',
-      userTrailsString: '',
-      loading: false,
-      error: false,
-      fetchedUserTrails: [],
-      userTrails: [],
-      trailNumber: null
-    }
-
-    case 'ADD_USER_TRAIL':
-    return {
-      ...state,
-      userTrails: [...state.userTrails, {
-          id: action.payload.id,
-          trail_number: action.payload.trail_number
-        }
-      ]
-    }
-
-    case 'ADD_FETCHED_TRAIL':
-    let newTrailConvertedDiff = action.payload.trails.map(mapObj => {
-      if(mapObj.difficulty === 'green') {
-        return {...mapObj, difficulty: 'Easy', rank: 1}
-      } else if (mapObj.difficulty ==='greenBlue') {
-        return {...mapObj, difficulty: 'Moderatly Easy', rank: 2}
-      } else if (mapObj.difficulty ==='blue') {
-        return {...mapObj, difficulty: 'Moderate', rank: 3}
-      } else if (mapObj.difficulty ==='blueBlack') {
-        return {...mapObj, difficulty: 'Moderately Hard ', rank: 4}
-      } else if (mapObj.difficulty ==='black') {
-        return {...mapObj, difficulty: 'Hard', rank: 5}
-      } else {
-        return mapObj
-      }
-    })
-    return {
-      ...state,
-      fetchedUserTrails: [...state.fetchedUserTrails, newTrailConvertedDiff[0]],
-      trailNumber: state.fetchedUserTrails[0]? state.fetchedUserTrails[0].id : newTrailConvertedDiff[0].id
-    }
-
-    case 'DELETE_FAVORITE':
-    let remainingUserTrails = state.userTrails.filter(trail => {
-      return trail.trail_number !== action.payload
-    })
-    let remainingFetchedTrails = state.fetchedUserTrails.filter(trail => {
-      return trail.id !== action.payload
-    })
-    console.log(remainingFetchedTrails)
-
-    return {
-      ...state,
-      userTrails: remainingUserTrails,
-      fetchedUserTrails: remainingFetchedTrails,
-      trailNumber: remainingFetchedTrails[0]? remainingFetchedTrails[0].id: null
     }
 
     case 'FETCH_USER_TRAILS':
@@ -106,6 +43,8 @@ export default (
         return mapObj
       }
     })
+    localStorage.setItem('fetchedUserTrails', JSON.stringify(userConvertedDiff))
+    // map local storage goes here
     return {
       ...state,
       error: false,
@@ -114,7 +53,57 @@ export default (
       trailNumber: action.payload.trails[0].id
     }
 
+    case 'ADD_USER_TRAIL':
+    let addedTrail = [...state.userTrails,
+    {id: action.payload.id, trail_number: action.payload.trail_number}]
+    localStorage.setItem('userTrails', JSON.stringify(addedTrail))
+    return {...state, userTrails: addedTrail}
+
+    case 'ADD_FETCHED_TRAIL':
+    let newTrailConvertedDiff = action.payload.trails.map(mapObj => {
+      if(mapObj.difficulty === 'green') {
+        return {...mapObj, difficulty: 'Easy', rank: 1}
+      } else if (mapObj.difficulty ==='greenBlue') {
+        return {...mapObj, difficulty: 'Moderatly Easy', rank: 2}
+      } else if (mapObj.difficulty ==='blue') {
+        return {...mapObj, difficulty: 'Moderate', rank: 3}
+      } else if (mapObj.difficulty ==='blueBlack') {
+        return {...mapObj, difficulty: 'Moderately Hard ', rank: 4}
+      } else if (mapObj.difficulty ==='black') {
+        return {...mapObj, difficulty: 'Hard', rank: 5}
+      } else {
+        return mapObj
+      }
+    })
+    let addedFetchedTrail = [...state.fetchedUserTrails, newTrailConvertedDiff[0]]
+    localStorage.setItem('fetchedUserTrails', JSON.stringify(addedFetchedTrail))
+    // map local storage goes here
+    return {
+      ...state,
+      fetchedUserTrails: addedFetchedTrail,
+      trailNumber: state.fetchedUserTrails[0]? state.fetchedUserTrails[0].id : newTrailConvertedDiff[0].id
+    }
+
+    case 'DELETE_FAVORITE':
+    let remainingUserTrails = state.userTrails.filter(trail => {
+      return trail.trail_number !== action.payload
+    })
+    let remainingFetchedTrails = state.fetchedUserTrails.filter(trail => {
+      return trail.id !== action.payload
+    })
+
+    localStorage.setItem('userTrails', JSON.stringify(remainingUserTrails))
+    localStorage.setItem('fetchedUserTrails', JSON.stringify(remainingFetchedTrails))
+    // map local storage goes here
+    return {
+      ...state,
+      userTrails: remainingUserTrails,
+      fetchedUserTrails: remainingFetchedTrails,
+      trailNumber: remainingFetchedTrails[0]? remainingFetchedTrails[0].id: null
+    }
+
     case 'USER_TRAIL_MAP':
+    // map local storage goes here
     return{...state, loading: false, trailNumber: action.payload}
 
     case 'USER_TRAIL_SORT':
@@ -147,6 +136,19 @@ export default (
       }
     })
     return state
+
+    case 'FETCH_ERROR':
+    return {...state, loading: false, error: action.payload}
+
+    case 'CLEAR_STATE':
+    return {
+      currentUser: '',
+      loading: false,
+      error: false,
+      fetchedUserTrails: [],
+      userTrails: [],
+      trailNumber: null
+    }
 
     default:
     return state;

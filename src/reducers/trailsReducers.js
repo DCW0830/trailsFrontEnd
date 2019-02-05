@@ -11,35 +11,32 @@ export default (
   state = {
     error: null,
     loading: false,
-    location: {},
-    latLon: {},
-    trails: JSON.parse(localStorage.getItem('searchedTrails')) || [],
+    location: JSON.parse(localStorage.getItem('location')) || {},
+    latLon: JSON.parse(localStorage.getItem('latLon')) || {},
+    trails: JSON.parse(localStorage.getItem('trails')) || [],
     trailNumber: mapStart()
   }, action) => {
   switch (action.type) {
 
-    case'LOADING_GEOCODE':
-    return {...state, error: false, loading: true}
-
     case'FETCH_GEOCODE':
     let base = action.payload.results[0].address_components
     let baseLatLon = action.payload.results[0].geometry.location
-
-    return {...state, error: false, loading: true, latLon: baseLatLon,
-      location: {
-        city:base[1],
-        state:base[3],
-        county:base[2],
-        zipCode:base[0],
-        country:base[4]
-      }
+    let searchedLocation = {
+      city:base[1],
+      state:base[3],
+      county:base[2],
+      zipCode:base[0],
+      country:base[4]
     }
+    localStorage.setItem('location', JSON.stringify(searchedLocation))
+    localStorage.setItem('latLon', JSON.stringify(baseLatLon))
+    return {...state, error: false, loading: true, latLon: baseLatLon,
+    location: searchedLocation}
 
     case'LOADING_TRAILS':
     return {...state, error: false, loading: true}
 
     case 'FETCH_TRAILS':
-
     let convertedDiff = action.payload.trails.map(mapObj => {
       if(mapObj.difficulty === 'green') {
         return {...mapObj, difficulty: 'Easy', rank: 1}
@@ -54,8 +51,9 @@ export default (
       } else {
         return mapObj
       }
-
     })
+    localStorage.setItem('trails', JSON.stringify(convertedDiff))
+    // trail map local localStorage goes here
     return {
       ...state,
       error: false,
@@ -64,24 +62,11 @@ export default (
       trailNumber: action.payload.trails[0].id
     }
 
-    case 'FETCH_ERROR':
-    return {...state, trails: [], loading: false, error: action.payload}
-
-    case 'CLEAR_STATE' :
-    return {
-      error: null,
-      loading: false,
-      location: {},
-      latLon: {},
-      trails: [],
-      trailNumber: ''
-    }
-
     case 'TRAIL_MAP':
+    // trail map local localStorage goes here
     return{...state, loading: false, trailNumber: action.payload}
 
     case 'TRAIL_SORT':
-
     state.trails.sort(function(a, b){
       let aToBeSorted
       let bToBeSorted
@@ -111,6 +96,22 @@ export default (
       }
     })
     return state
+    
+    case'LOADING_GEOCODE':
+    return {...state, error: false, loading: true}
+
+    case 'FETCH_ERROR':
+    return {...state, trails: [], loading: false, error: action.payload}
+
+    case 'CLEAR_STATE' :
+    return {
+      error: null,
+      loading: false,
+      location: {},
+      latLon: {},
+      trails: [],
+      trailNumber: ''
+    }
 
     default:
     return state;
