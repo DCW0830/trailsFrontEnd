@@ -1,11 +1,11 @@
-let mapStart = () => {
- if(localStorage['searchedTrails']) {
-   let newArray = JSON.parse(localStorage.getItem('searchedTrails'))
-   return newArray[0].id
-  } else {
-   return ''
-  }
-}
+// let mapStart = () => {
+//  if(localStorage['searchedTrails']) {
+//    let newArray = JSON.parse(localStorage.getItem('searchedTrails'))
+//    return newArray[0].id
+//   } else {
+//    return ''
+//   }
+// }
 
 export default (
   state = {
@@ -14,7 +14,7 @@ export default (
     location: JSON.parse(localStorage.getItem('location')) || {},
     latLon: JSON.parse(localStorage.getItem('latLon')) || {},
     trails: JSON.parse(localStorage.getItem('trails')) || [],
-    trailNumber: mapStart()
+    trailNumber: localStorage.getItem('trailNumber') || null,
   }, action) => {
   switch (action.type) {
 
@@ -52,18 +52,19 @@ export default (
         return mapObj
       }
     })
+    let firstMap = action.payload.trails[0].id
     localStorage.setItem('trails', JSON.stringify(convertedDiff))
-    // trail map local localStorage goes here
+    localStorage.setItem('trailNumber', firstMap)
     return {
       ...state,
       error: false,
       loading: false,
       trails: convertedDiff,
-      trailNumber: action.payload.trails[0].id
+      trailNumber: firstMap
     }
 
     case 'TRAIL_MAP':
-    // trail map local localStorage goes here
+    localStorage.setItem('trailNumber', action.payload)
     return{...state, loading: false, trailNumber: action.payload}
 
     case 'TRAIL_SORT':
@@ -96,7 +97,7 @@ export default (
       }
     })
     return state
-    
+
     case'LOADING_GEOCODE':
     return {...state, error: false, loading: true}
 
