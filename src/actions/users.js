@@ -1,9 +1,9 @@
 import url from '../urls'
 import history from '../history'
 
-export function createUser(userInput) {
+export function logIn(userInput) {
   return (dispatch) => {
-    fetch(url.signUp, {
+    fetch(url.logIn, {
       method: 'POST',
       body: JSON.stringify(
         {user: {
@@ -15,44 +15,31 @@ export function createUser(userInput) {
         'Content-Type': 'application/json'
       }
     }).then(res => res.json())
-    .then(newUser =>  {
-      if (newUser.id) {
-        localStorage.setItem('id', newUser.id)
-        localStorage.setItem('username', newUser.username)
-        history.push('/')
-        dispatch({type: 'LOG_IN', payload: newUser})
-      } else if (newUser.errors) {
-        dispatch({type: 'FETCH_ERROR', payload: newUser.errors})
+    .then(user =>  {
+      if (user.id) {
+        localStorage.setItem('id', user.id)
+        localStorage.setItem('username', user.username)
+        dispatch({type: 'LOG_IN', payload: user})
+        if(user.trails[0]) {
+          localStorage.setItem('userTrails', JSON.stringify(user.trails))
+          let newArray = user.trails.map(trail => {
+            return trail.trail_number
+          })
+          let newUnique = [...new Set(newArray)];
+          let newString = newUnique.join(',')
+          fetch(`${url.trailApiById}&ids=${newString}`)
+          .then(res => res.json())
+          .then(userTrails =>  {
+            dispatch({type: 'FETCH_USER_TRAILS', payload: userTrails})
+          })
+          .catch(error => {
+            dispatch({type: 'FETCH_ERROR', payload: error})
+          })
+        }
+      } else if (user.errors) {
+        dispatch({type: 'FETCH_ERROR', payload: user.errors})
       }
-    })
-    .catch(error => {
-      dispatch({type: 'FETCH_ERROR', payload: error})
-    })
-  }
-}
-
-export function logIn(userInput) {
-  return (dispatch) => {
-    fetch(url.logIn, {
-      method: 'POST',
-      body: JSON.stringify(
-        {user: {
-        username: userInput.username,
-        password: userInput.pw
-      } }),
-      headers:{
-        'Content-Type': 'application/json'
-      }
-    }).then(res => res.json())
-    .then(returningUser =>  {
-      if (returningUser.id) {
-        localStorage.setItem('id', returningUser.id)
-        localStorage.setItem('username', returningUser.username)
-        history.push('/')
-        dispatch({type: 'LOG_IN', payload: returningUser})
-      } else if (returningUser.errors) {
-        dispatch({type: 'FETCH_ERROR', payload: returningUser.errors})
-      }
+      history.push('/')
     })
     .catch(error => {
       dispatch({type: 'FETCH_ERROR', payload: error})
@@ -62,7 +49,7 @@ export function logIn(userInput) {
 
 export function addFavorite (trailNumber) {
   return (dispatch) => {
-    fetch(url.createTrail, {
+    fetch(url.editTrail, {
       method: 'POST',
       body: JSON.stringify({
         user_id: localStorage.id,
@@ -74,11 +61,19 @@ export function addFavorite (trailNumber) {
         'Content-Type': 'application/json'
       }
     }).then(res => res.json())
-    .then(trail =>  {
-      if (trail.id) {
-        dispatch({type: 'ADD_USER_TRAIL', payload: trail})
-      } else if (trail.errors) {
-        dispatch({type: 'FETCH_ERROR', payload: trail.errors})
+    .then(newUserTrail =>  {
+      if (newUserTrail.id) {
+        dispatch({type: 'ADD_USER_TRAIL', payload: newUserTrail})
+        fetch(`${url.trailApiById}&ids=${newUserTrail.trail_number}`)
+        .then(res => res.json())
+        .then(newTrailInfo =>  {
+          dispatch({type: 'ADD_FETCHED_TRAIL', payload: newTrailInfo})
+        })
+        .catch(error => {
+          dispatch({type: 'FETCH_ERROR', payload: error})
+        })
+      } else if (newUserTrail.errors) {
+        dispatch({type: 'FETCH_ERROR', payload: newUserTrail.errors})
       }
     })
     .catch(error => {
@@ -88,19 +83,12 @@ export function addFavorite (trailNumber) {
 }
 
 export function deleteFavorite (trailId) {
-  console.log(trailId)
   return (dispatch) => {
-
-    fetch(`${url.deleteTrail}/${trailId}`, {
-      method: 'DELETE',
-      headers:{
-        'Content-Type': 'application/json'
-      }
-    }).then(res => res.json())
+    fetch(`${url.editTrail}/${trailId}`, {method: 'DELETE'})
+    .then(res => res.json())
     .then(trail =>  {
-      console.log(trail)
       if (trail.id) {
-        dispatch({type: 'DELETE_FAVORITE', payload: trail})
+        dispatch({type: 'DELETE_FAVORITE', payload: trail.trail_number})
       } else if (trail.errors) {
         dispatch({type: 'FETCH_ERROR', payload: trail.errors})
       }

@@ -6,11 +6,11 @@ import FindTrails from './FindTrails'
 import history  from '../history'
 import {connect} from 'react-redux'
 import {clearState} from '../actions/users'
-import {  Router, Route, Redirect} from 'react-router-dom'
+import {Router, Route, Redirect} from 'react-router-dom'
 
 class App extends Component {
   logOut = () => {
-    if(localStorage['id']) localStorage.removeItem('id', 'username', 'trails')
+    if(localStorage['id']) localStorage.clear()
     return <Redirect to='/LogIn' />
   }
 
@@ -19,8 +19,8 @@ class App extends Component {
       <Router history={history}>
         <React.Fragment>
           <Route exact path="/" render={ () => loggedIn() ? <Home/> : <Redirect to='/LogIn' /> }/>
-          <Route path="/LogIn" component={()=> loggedIn() ? <Redirect to="/" /> : <LogIn clearState={this.props.clearState()}/> }/>
-          <Route path="/SignUp" component={()=> loggedIn() ? <Redirect to='/' /> : <SignUp clearState={this.props.clearState()}/> }/>
+          <Route path="/LogIn" component={()=> loggedIn() ? <Redirect to="/" /> : <LogIn logOut={this.logOut()} clearState={this.props.clearState()}/> }/>
+          <Route path="/SignUp" component={()=> loggedIn() ? <Redirect to='/' /> : <SignUp logOut={this.logOut()} clearState={this.props.clearState()}/> }/>
           <Route path="/FindTrails" component={()=> loggedIn() ? <FindTrails/> : <Redirect to='/LogIn'/> }/>
           <Route path='/LogOut' component={() => this.logOut()} />
         </React.Fragment>

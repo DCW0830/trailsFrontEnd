@@ -5,15 +5,14 @@ import '../assets/css/index.css'
 
 class UserTrailMap extends Component  {
   render(){
-    const { trailNumber } = this.props
+    const { userTrailNumber } = this.props
     return (
       <div>
         <iframe id='userMap'
           title='userTrail'
-          sandbox="allow-pointer-lock allow-same-origin allow-scripts"
           frameBorder="0"
           scrolling="no"
-          src= {url.areaMap + trailNumber}
+          src= {url.areaMap + userTrailNumber}
         />
       </div>
     )
@@ -22,7 +21,7 @@ class UserTrailMap extends Component  {
 
 const mapStateToProps =(state => {
   return ({
-    trailNumber: state.usersReducers.trailNumber
+    userTrailNumber: state.usersReducers.userTrailNumber
   })
 })
 

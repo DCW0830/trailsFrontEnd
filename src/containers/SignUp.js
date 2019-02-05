@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
-import { createUser } from '../actions/users'
+import { logIn } from '../actions/users'
 import {Input} from 'semantic-ui-react'
 import '../assets/css/index.css'
 
@@ -27,7 +27,7 @@ class SignUp extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault()
-    this.props.createUser(this.state)
+    this.props.logIn(this.state)
     this.setState({
       username: '',
       pw: '',
@@ -81,4 +81,4 @@ const mapStateToProps = (state => {
   })
 })
 
-export default withRouter (connect(mapStateToProps, {createUser})(SignUp))
+export default withRouter (connect(mapStateToProps, {logIn})(SignUp))

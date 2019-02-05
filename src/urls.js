@@ -12,9 +12,7 @@ const url = {
   trailAPI: trailsURL + API_HIKING_KEY,
   trailApiById: trailsById + API_HIKING_KEY,
   logIn: `${backEnd}/login`,
-  signUp: `${backEnd}/signup`,
-  createTrail: `${backEnd}/trails`,
-  deleteTrail:`${backEnd}/trails`,
+  editTrail: `${backEnd}/trails`,
   areaMap: baseAreaMap
 }
 export default url
