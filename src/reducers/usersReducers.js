@@ -9,7 +9,7 @@
 
 export default (
   state = {
-    trailNumber: localStorage.getItem('trailNumber') || null,
+    userTrailNumber: localStorage.getItem('userTrailNumber') || null,
     currentUser: localStorage.getItem('username') || '',
     fetchedUserTrails: JSON.parse(localStorage.getItem('fetchedUserTrails')) || [],
     userTrails: JSON.parse(localStorage.getItem('userTrails')) || [],
@@ -45,13 +45,13 @@ export default (
     })
     let fetchedMap = action.payload.trails[0].id
     localStorage.setItem('fetchedUserTrails', JSON.stringify(userConvertedDiff))
-    localStorage.setItem('trailNumber', fetchedMap)
+    localStorage.setItem('userTrailNumber', fetchedMap)
     return {
       ...state,
       error: false,
       loading: false,
       fetchedUserTrails: userConvertedDiff,
-      trailNumber: fetchedMap
+      userTrailNumber: fetchedMap
     }
 
     case 'ADD_USER_TRAIL':
@@ -79,11 +79,11 @@ export default (
     let addedFetchedTrail = [...state.fetchedUserTrails, newTrailConvertedDiff[0]]
     let addedFetchedMap = state.fetchedUserTrails[0]? state.fetchedUserTrails[0].id : newTrailConvertedDiff[0].id
     localStorage.setItem('fetchedUserTrails', JSON.stringify(addedFetchedTrail))
-    localStorage.setItem('trailNumber', addedFetchedMap)
+    localStorage.setItem('userTrailNumber', addedFetchedMap)
     return {
       ...state,
       fetchedUserTrails: addedFetchedTrail,
-      trailNumber: addedFetchedMap
+      userTrailNumber: addedFetchedMap
     }
 
     case 'DELETE_FAVORITE':
@@ -96,17 +96,17 @@ export default (
     let deleteMap = remainingFetchedTrails[0]? remainingFetchedTrails[0].id: null
     localStorage.setItem('userTrails', JSON.stringify(remainingUserTrails))
     localStorage.setItem('fetchedUserTrails', JSON.stringify(remainingFetchedTrails))
-    localStorage.setItem('trailNumber', deleteMap)
+    localStorage.setItem('userTrailNumber', deleteMap)
     return {
       ...state,
       userTrails: remainingUserTrails,
       fetchedUserTrails: remainingFetchedTrails,
-      trailNumber: deleteMap
+      userTrailNumber: deleteMap
     }
 
     case 'USER_TRAIL_MAP':
-    localStorage.setItem('trailNumber', action.payload)
-    return{...state, loading: false, trailNumber: action.payload}
+    localStorage.setItem('userTrailNumber', action.payload)
+    return{...state, loading: false, userTrailNumber: action.payload}
 
     case 'USER_TRAIL_SORT':
     state.fetchedUserTrails.sort(function(a, b){
@@ -149,7 +149,7 @@ export default (
       error: false,
       fetchedUserTrails: [],
       userTrails: [],
-      trailNumber: null
+      userTrailNumber: null
     }
 
     default:
