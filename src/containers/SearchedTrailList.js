@@ -84,7 +84,6 @@ class SearchedTrailList extends Component {
           {county? ` ${county.long_name}`: null}
           {trails[0]? this.displayResults(): null}
           <Table className='content' attached='top' size='large' sortable striped celled selectable padded>
-
             <Table.Header >
               <Table.Row>
                 <Table.HeaderCell onClick={this.handleClick}>Name</Table.HeaderCell>
@@ -113,7 +112,6 @@ class SearchedTrailList extends Component {
                 </Table.HeaderCell>
               </Table.Row>
             </Table.Footer>
-            
           </Table>
         </div>
       </div>

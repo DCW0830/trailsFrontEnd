@@ -52,6 +52,7 @@ export function logIn(userInput) {
 
 export function addFavorite (trailNumber) {
   return (dispatch) => {
+
     fetch(url.editTrail, {
       method: 'POST',
       body: JSON.stringify({
@@ -83,6 +84,7 @@ export function addFavorite (trailNumber) {
       dispatch({type: 'FETCH_ERROR', payload: error})
     })
   }
+  
 }
 
 export function deleteFavorite (trailId) {

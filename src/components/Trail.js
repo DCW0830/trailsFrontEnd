@@ -8,8 +8,11 @@ class Trail extends Component{
   }
 
   handleClick = (event, trailNumber) => {
+
     if(!this.state.click) {
+
       this.props.addFavorite(trailNumber)
+      
       this.setState({ click: !this.state.click})
     } else {
       this.props.deleteFavorite(this.props.userTrailId.id)

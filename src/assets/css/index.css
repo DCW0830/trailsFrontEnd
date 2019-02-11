@@ -17,6 +17,7 @@
 #searchRight{
   position: relative;
 }
+
 #UserTrailListContainer {
   position: relative;
   left: 50px;
@@ -42,11 +43,9 @@
 
 .headerContainer{
   overflow: auto;
-  display: table-header-group;
 }
 
 .content{
-  display: table-header-group;
   height:400px;
   overflow:auto;
   cursor: pointer;
